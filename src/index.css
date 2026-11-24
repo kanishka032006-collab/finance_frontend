@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #F9EAD7;
+    color: #0F172A;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1ede8;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* ============================================================
+   TRIDIN FINANCE – PRINT / PDF STYLES
+   ============================================================ */
+
+/* Page settings – must be outside @media to satisfy all CSS linters */
+@page {
+  size: A4 portrait;
+  margin: 15mm 12mm;
+}
+
+@media print {
+  /* ── Hide everything first ── */
+  body * {
+    visibility: hidden;
+  }
+
+  /* ── Receipt modal (legacy) ── */
+  #printable-receipt,
+  #printable-receipt * {
+    visibility: visible;
+  }
+  #printable-receipt {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    background: white;
+  }
+
+  /* ── Full-page printable areas ── */
+  body.tridin-printing .tridin-print-target,
+  body.tridin-printing .tridin-print-target * {
+    visibility: visible;
+  }
+  body.tridin-printing .tridin-print-target {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    background: white !important;
+    padding: 24px !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  /* ── Always hide action buttons when printing ── */
+  .no-print,
+  button.no-print,
+  [data-no-print] {
+    display: none !important;
+  }
+
+  /* ── Table improvements ── */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th,
+  td {
+    border: 1px solid #e2e8f0;
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+  thead {
+    background-color: #f8fafc !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── Colors: force brand colours in print ── */
+  .print-brand-green {
+    background-color: #BFE23A !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .print-brand-red {
+    color: #E10600 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── Page breaks ── */
+  .print-break-before {
+    page-break-before: always;
+  }
+  .print-break-after {
+    page-break-after: always;
+  }
+  .print-no-break {
+    page-break-inside: avoid;
+  }
+}
