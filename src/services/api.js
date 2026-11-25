@@ -1,10 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-  // Use the same origin by default. Vite proxies /api to the local backend in
-  // development, while deployed builds can point this at their backend with
-  // VITE_API_URL.
-  baseURL: import.meta.env.VITE_API_URL || '/api',
+  // Local development can override this with VITE_API_URL.
+  baseURL: import.meta.env.VITE_API_URL || 'https://backend-finance-s3xs.onrender.com/api',
   headers: {
     'Content-Type': 'application/json',
   },
