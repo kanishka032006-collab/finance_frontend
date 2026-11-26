@@ -39,7 +39,7 @@
   min-height: 100vh;
   min-height: 100svh;
   margin: 0 auto;
-  padding: 48px clamp(22px, 5vw, 76px);
+  padding: max(32px, env(safe-area-inset-top)) clamp(22px, 5vw, 76px) max(32px, env(safe-area-inset-bottom));
   display: grid;
   grid-template-columns: minmax(0, 1.08fr) minmax(380px, .92fr);
   align-items: center;
@@ -175,22 +175,31 @@
 }
 
 @media (max-width: 700px) {
-  .login-layout { width: min(520px, 100%); min-height: 100svh; grid-template-columns: 1fr; gap: 28px; padding: 30px 20px 24px; }
+  .login-layout { width: min(520px, 100%); min-height: 100svh; grid-template-columns: 1fr; gap: 24px; padding: max(22px, env(safe-area-inset-top)) 18px max(20px, env(safe-area-inset-bottom)); }
   .login-intro { padding: 0; }
-  .login-intro-copy { margin-top: 35px; }
-  .login-intro h1 { font-size: clamp(42px, 11vw, 58px); }
-  .login-intro-text { max-width: 390px; margin-top: 14px; font-size: 13px; }
+  .login-intro-copy { margin-top: 27px; }
+  .login-intro h1 { font-size: clamp(39px, 10vw, 54px); }
+  .login-intro-text { max-width: 390px; margin-top: 11px; font-size: 12px; line-height: 1.6; }
   .login-visual { display: none; }
-  .login-trust-note { margin-top: 17px; }
+  .login-trust-note { margin-top: 13px; }
   .login-form-side { width: 100%; }
-  .login-card { width: 100%; padding: 26px 23px; border-radius: 23px; }
-  .login-card-head { margin-bottom: 25px; }
-  .login-footer { margin-top: 14px; }
+  .login-card { width: 100%; padding: 23px 20px; border-radius: 22px; }
+  .login-card-head { margin-bottom: 20px; }
+  .login-card-subtitle { margin: 8px 0 20px; }
+  .login-form { gap: 15px; }
+  .login-input-wrap input { height: 49px; }
+  .login-submit { min-height: 49px; }
+  .login-demo { margin-top: 21px; padding-top: 16px; }
+  .login-demo-buttons button { min-height: 44px; }
+  .login-footer { margin-top: 12px; }
 }
 
 @media (max-width: 360px) {
+  .login-layout { padding-inline: 14px; }
+  .login-card { padding-inline: 17px; }
+  .login-brand-mark { width: 44px; height: 44px; }
   .login-demo-buttons { grid-template-columns: 1fr; }
-  .login-demo-buttons button { min-height: 36px; }
+  .login-demo-buttons button { min-height: 44px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
