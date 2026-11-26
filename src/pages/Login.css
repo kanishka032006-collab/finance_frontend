@@ -175,31 +175,54 @@
 }
 
 @media (max-width: 700px) {
-  .login-layout { width: min(520px, 100%); min-height: 100svh; grid-template-columns: 1fr; gap: 24px; padding: max(22px, env(safe-area-inset-top)) 18px max(20px, env(safe-area-inset-bottom)); }
+  .login-layout { width: min(520px, 100%); min-height: 100svh; grid-template-columns: 1fr; gap: 17px; padding: max(18px, env(safe-area-inset-top)) 18px max(14px, env(safe-area-inset-bottom)); }
   .login-intro { padding: 0; }
-  .login-intro-copy { margin-top: 27px; }
-  .login-intro h1 { font-size: clamp(39px, 10vw, 54px); }
-  .login-intro-text { max-width: 390px; margin-top: 11px; font-size: 12px; line-height: 1.6; }
+  .login-intro-copy { margin-top: 20px; }
+  .login-kicker { margin-bottom: 12px; }
+  .login-intro h1 { font-size: clamp(38px, 9.5vw, 50px); }
+  .login-intro-text { max-width: 390px; margin-top: 8px; font-size: 11px; line-height: 1.5; }
   .login-visual { display: none; }
-  .login-trust-note { margin-top: 13px; }
+  .login-trust-note { display: none; }
   .login-form-side { width: 100%; }
-  .login-card { width: 100%; padding: 23px 20px; border-radius: 22px; }
-  .login-card-head { margin-bottom: 20px; }
-  .login-card-subtitle { margin: 8px 0 20px; }
-  .login-form { gap: 15px; }
-  .login-input-wrap input { height: 49px; }
-  .login-submit { min-height: 49px; }
-  .login-demo { margin-top: 21px; padding-top: 16px; }
+  .login-card { width: 100%; padding: 19px 20px; border-radius: 22px; }
+  .login-card-head { margin-bottom: 16px; }
+  .login-card-subtitle { margin: 7px 0 15px; }
+  .login-form { gap: 12px; }
+  .login-field label { margin-bottom: 6px; }
+  .login-input-wrap input { height: 46px; }
+  .login-submit { min-height: 46px; }
+  .login-demo { margin-top: 16px; padding-top: 13px; }
   .login-demo-buttons button { min-height: 44px; }
-  .login-footer { margin-top: 12px; }
+  .login-footer { margin-top: 8px; }
 }
 
 @media (max-width: 360px) {
   .login-layout { padding-inline: 14px; }
   .login-card { padding-inline: 17px; }
   .login-brand-mark { width: 44px; height: 44px; }
-  .login-demo-buttons { grid-template-columns: 1fr; }
-  .login-demo-buttons button { min-height: 44px; }
+  .login-demo-buttons { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; }
+  .login-demo-buttons button { min-height: 44px; gap: 4px; padding-inline: 3px; font-size: 9px; }
+}
+
+@media (max-width: 360px) and (max-height: 760px) {
+  .login-layout { gap: 12px; padding-top: max(12px, env(safe-area-inset-top)); }
+  .login-intro-copy { margin-top: 14px; }
+  .login-intro h1 { font-size: 35px; }
+  .login-intro-text { display: none; }
+}
+
+@media (max-width: 340px) and (max-height: 700px) {
+  .login-intro-copy { display: none; }
+}
+
+@media (max-width: 700px) and (max-height: 740px) {
+  .login-layout { gap: 14px; }
+  .login-intro-copy { margin-top: 16px; }
+  .login-intro-text { display: none; }
+  .login-card { padding-block: 16px; }
+  .login-card-head { margin-bottom: 12px; }
+  .login-card-subtitle { margin-bottom: 12px; }
+  .login-demo { margin-top: 13px; padding-top: 11px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
