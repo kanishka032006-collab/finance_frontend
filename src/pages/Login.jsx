@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Lock, Mail, ShieldAlert, ArrowRight } from 'lucide-react';
+import { ArrowRight, LockKeyhole, Mail, ShieldAlert, ShieldCheck, TrendingUp } from 'lucide-react';
 import api from '../services/api';
+import './Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -61,167 +62,188 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F9EAD7] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        {/* Brand Logo */}
-        <div className="mx-auto w-14 h-14 rounded-2xl bg-slate-900 text-[#BFE23A] font-black flex items-center justify-center text-2xl shadow-lg border border-slate-800">
-          T
-        </div>
-        <h2 className="mt-4 text-2xl font-black tracking-tight text-slate-900">
-          TRIDIN SOFTWARE
-        </h2>
-        <p className="text-xs font-semibold text-slate-600 uppercase tracking-widest mt-0.5">
-          Finance Collection Management System
-        </p>
+    <div className="login-shell">
+      <div className="login-ambient" aria-hidden="true">
+        <span className="login-orb login-orb-lime" />
+        <span className="login-orb login-orb-blue" />
+        <span className="login-grid" />
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-6 shadow-premium rounded-2xl sm:px-10 border border-stone-200">
-          {error && (
-            <div className="mb-5 p-3 rounded-xl bg-red-50 border border-red-200 flex items-start gap-2.5 text-xs text-[#E10600]">
-              <ShieldAlert className="w-4 h-4 shrink-0 mt-0.5" />
-              <span>{error}</span>
-            </div>
-          )}
+      <main className="login-layout">
+        <section className="login-intro" aria-label="Tridin Finance">
+          <a className="login-brand" href="/login" aria-label="Tridin Finance home">
+            <span className="login-brand-mark">T</span>
+            <span className="login-brand-name">TRIDIN <b>FINANCE</b></span>
+          </a>
 
-          <form className="space-y-5" onSubmit={handleSubmit}>
-            <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                Email Address
-              </label>
-              <div className="relative rounded-xl shadow-xs">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                  <Mail className="w-4 h-4" />
-                </div>
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@tridin.com"
-                  className="block w-full pl-10 pr-3 py-2.5 text-sm rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#BFE23A] focus:border-slate-900 bg-stone-50/50"
-                />
-              </div>
-            </div>
-
-            <div>
-              <div className="flex justify-between items-center mb-1.5">
-                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                  Password
-                </label>
-                <button
-                  type="button"
-                  onClick={() => setForgotModalOpen(true)}
-                  className="text-xs text-slate-500 hover:text-slate-900 font-semibold transition"
-                >
-                  Forgot password?
-                </button>
-              </div>
-              <div className="relative rounded-xl shadow-xs">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                  <Lock className="w-4 h-4" />
-                </div>
-                <input
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="block w-full pl-10 pr-3 py-2.5 text-sm rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#BFE23A] focus:border-slate-900 bg-stone-50/50"
-                />
-              </div>
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full flex justify-center items-center gap-2 py-3 px-4 rounded-xl shadow-sm text-sm font-bold text-slate-950 bg-[#BFE23A] hover:bg-[#aed12b] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#BFE23A] disabled:opacity-50 transition"
-              >
-                {loading ? 'Authenticating...' : 'Sign In to Portal'}
-                {!loading && <ArrowRight className="w-4 h-4" />}
-              </button>
-            </div>
-          </form>
-
-          {/* Quick Demo Credential Fillers */}
-          <div className="mt-6 pt-5 border-t border-stone-100">
-            <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2.5 text-center">
-              Quick Test Credentials (One-Click)
+          <div className="login-intro-copy">
+            <p className="login-kicker"><span /> Finance operations suite</p>
+            <h1>Collections,<br /><em>in clear view.</em></h1>
+            <p className="login-intro-text">
+              A calmer way to manage customers, track repayments, and keep every collection moving.
             </p>
-            <div className="grid grid-cols-3 gap-2">
-              <button
-                type="button"
-                onClick={() => fillCredentials('admin@tridin.com', 'Admin@123')}
-                className="py-2 px-2 bg-purple-50 hover:bg-purple-100 border border-purple-200 rounded-xl text-[11px] font-bold text-purple-900 transition text-center"
-              >
-                Admin Portal
-              </button>
-              <button
-                type="button"
-                onClick={() => fillCredentials('staff@tridin.com', 'Staff@123')}
-                className="py-2 px-2 bg-[#BFE23A]/20 hover:bg-[#BFE23A]/40 border border-[#BFE23A]/50 rounded-xl text-[11px] font-black text-slate-950 transition text-center"
-              >
-                Collector Portal
-              </button>
-              <button
-                type="button"
-                onClick={() => fillCredentials('auditor@tridin.com', 'Auditor@123')}
-                className="py-2 px-2 bg-stone-100 hover:bg-stone-200 border border-stone-200 rounded-xl text-[11px] font-bold text-slate-800 transition text-center"
-              >
-                Auditor Portal
-              </button>
+          </div>
+
+          <div className="login-visual" aria-hidden="true">
+            <div className="login-visual-top">
+              <div>
+                <span className="visual-label">COLLECTION OVERVIEW</span>
+                <strong>Finance workspace</strong>
+              </div>
+              <span className="visual-icon"><TrendingUp size={18} /></span>
+            </div>
+            <div className="visual-chart">
+              <div className="visual-chart-lines"><i /><i /><i /><i /></div>
+              <svg viewBox="0 0 520 150" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="chartStroke" x1="0" x2="1" y1="0" y2="0">
+                    <stop offset="0%" stopColor="#bfe23a" stopOpacity=".35" />
+                    <stop offset="100%" stopColor="#d8f77c" />
+                  </linearGradient>
+                  <linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stopColor="#bfe23a" stopOpacity=".2" />
+                    <stop offset="100%" stopColor="#bfe23a" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                <path className="visual-chart-area" d="M0 120 C35 112 47 92 78 98 S126 120 160 84 S210 89 245 67 S295 89 330 53 S380 67 410 42 S462 50 520 14 V150 H0Z" />
+                <path className="visual-chart-line" d="M0 120 C35 112 47 92 78 98 S126 120 160 84 S210 89 245 67 S295 89 330 53 S380 67 410 42 S462 50 520 14" />
+                <circle cx="410" cy="42" r="4" />
+                <circle className="visual-chart-pulse" cx="410" cy="42" r="10" />
+              </svg>
+            </div>
+            <div className="login-visual-bottom">
+              <span><i className="status-dot" /> Secure collection management</span>
+              <span>Built for clarity <b>↗</b></span>
             </div>
           </div>
-        </div>
 
-        {/* Security & System Info Footer */}
-        <p className="mt-6 text-center text-xs text-slate-500">
-          Protected by Enterprise JWT Authentication & PostgreSQL Row Constraints.
-        </p>
-      </div>
+          <div className="login-trust-note">
+            <ShieldCheck size={16} />
+            <span>Role-based access <i /> Secure sign-in</span>
+          </div>
+        </section>
 
-      {/* Forgot Password Modal */}
-      {forgotModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs">
-          <div className="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-stone-200 text-left">
-            <h3 className="text-base font-bold text-slate-900 mb-1">Reset Password</h3>
-            <p className="text-xs text-slate-500 mb-4">
-              Enter your registered staff email address to log a password reset request.
-            </p>
-            {forgotMessage ? (
-              <div className="p-3 bg-emerald-50 text-emerald-800 text-xs rounded-xl border border-emerald-200 mb-4">
-                {forgotMessage}
+        <section className="login-form-side" aria-label="Sign in">
+          <div className="login-card">
+            <div className="login-card-head">
+              <span className="login-card-icon"><LockKeyhole size={18} /></span>
+              <span className="login-card-secure">SECURE PORTAL</span>
+            </div>
+
+            <p className="login-card-overline">WELCOME BACK</p>
+            <h2>Sign in to continue</h2>
+            <p className="login-card-subtitle">Enter your account details to access your workspace.</p>
+
+            {error && (
+              <div className="login-error" role="alert">
+                <ShieldAlert size={17} />
+                <span>{error}</span>
               </div>
-            ) : (
-              <form onSubmit={handleForgotPassword} className="space-y-4">
-                <input
-                  type="email"
-                  required
-                  value={forgotEmail}
-                  onChange={(e) => setForgotEmail(e.target.value)}
-                  placeholder="Enter email"
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#BFE23A]"
-                />
-                <button
-                  type="submit"
-                  className="w-full py-2 bg-[#BFE23A] text-slate-900 font-bold text-xs rounded-xl hover:bg-[#aed12b]"
-                >
-                  Send Request
+            )}
+
+            <form className="login-form" onSubmit={handleSubmit}>
+              <div className="login-field">
+                <label htmlFor="login-email">Email address</label>
+                <div className="login-input-wrap">
+                  <Mail size={17} />
+                  <input
+                    id="login-email"
+                    type="email"
+                    autoComplete="username"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="admin@tridin.com"
+                  />
+                </div>
+              </div>
+
+              <div className="login-field">
+                <div className="login-label-row">
+                  <label htmlFor="login-password">Password</label>
+                  <button type="button" className="login-text-button" onClick={() => setForgotModalOpen(true)}>
+                    Forgot password?
+                  </button>
+                </div>
+                <div className="login-input-wrap">
+                  <LockKeyhole size={17} />
+                  <input
+                    id="login-password"
+                    type="password"
+                    autoComplete="current-password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter your password"
+                  />
+                </div>
+              </div>
+
+              <button type="submit" className="login-submit" disabled={loading}>
+                <span>{loading ? 'Authenticating…' : 'Sign in to portal'}</span>
+                {!loading && <ArrowRight size={18} />}
+              </button>
+            </form>
+
+            <div className="login-demo">
+              <div className="login-demo-heading"><span /> Quick demo access <span /></div>
+              <div className="login-demo-buttons">
+                <button type="button" onClick={() => fillCredentials('admin@tridin.com', 'Admin@123')}>
+                  <b className="demo-dot demo-admin" />Admin
                 </button>
+                <button type="button" onClick={() => fillCredentials('staff@tridin.com', 'Staff@123')}>
+                  <b className="demo-dot demo-staff" />Collector
+                </button>
+                <button type="button" onClick={() => fillCredentials('auditor@tridin.com', 'Auditor@123')}>
+                  <b className="demo-dot demo-auditor" />Auditor
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <p className="login-footer">Protected with encrypted sessions <span /> Tridin Finance Management</p>
+        </section>
+      </main>
+
+      {forgotModalOpen && (
+        <div className="login-modal-backdrop" role="presentation" onMouseDown={(e) => {
+          if (e.target === e.currentTarget) {
+            setForgotModalOpen(false);
+            setForgotMessage('');
+          }
+        }}>
+          <section className="login-modal" role="dialog" aria-modal="true" aria-labelledby="reset-title">
+            <div className="login-modal-icon"><Mail size={18} /></div>
+            <h3 id="reset-title">Reset password</h3>
+            <p>Enter your registered email to send a password reset request to your administrator.</p>
+            {forgotMessage ? (
+              <div className="login-success" role="status">{forgotMessage}</div>
+            ) : (
+              <form onSubmit={handleForgotPassword} className="login-form">
+                <div className="login-input-wrap">
+                  <Mail size={17} />
+                  <input
+                    type="email"
+                    required
+                    value={forgotEmail}
+                    onChange={(e) => setForgotEmail(e.target.value)}
+                    placeholder="Enter email address"
+                  />
+                </div>
+                <button type="submit" className="login-submit">Send request <ArrowRight size={17} /></button>
               </form>
             )}
             <button
               type="button"
+              className="login-modal-close"
               onClick={() => {
                 setForgotModalOpen(false);
                 setForgotMessage('');
               }}
-              className="mt-3 w-full py-1.5 text-xs text-slate-600 hover:text-slate-900 text-center"
             >
               Close
             </button>
-          </div>
+          </section>
         </div>
       )}
     </div>
