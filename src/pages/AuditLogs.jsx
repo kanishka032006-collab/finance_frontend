@@ -91,14 +91,14 @@ const AuditLogs = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search audit trail by keyword, staff name or details..."
-              className="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-[#BFE23A] bg-stone-50/50"
+              className="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-[#789486] bg-stone-50/50"
             />
           </div>
           <div className="flex gap-2">
             <select
               value={entityFilter}
               onChange={(e) => setEntityFilter(e.target.value)}
-              className="px-3 py-2 text-xs rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-[#BFE23A] bg-stone-50/50 text-slate-700 font-medium"
+              className="px-3 py-2 text-xs rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-[#789486] bg-stone-50/50 text-slate-700 font-medium"
             >
               <option value="">All Entities</option>
               <option value="Payment">Payment</option>
@@ -121,7 +121,7 @@ const AuditLogs = () => {
       <div className="bg-white rounded-2xl border border-stone-200 shadow-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-xs text-left">
-            <thead className="bg-[#FAF2E9]/70 border-b border-stone-200 text-slate-700 font-bold uppercase tracking-wider text-[10px]">
+            <thead className="bg-[#F8F8F5]/70 border-b border-stone-200 text-slate-700 font-bold uppercase tracking-wider text-[10px]">
               <tr>
                 <th className="py-3 px-4">Timestamp</th>
                 <th className="py-3 px-4">Staff / Actor</th>
@@ -231,7 +231,7 @@ const AuditLogs = () => {
               <span className="font-bold text-slate-700 uppercase tracking-wider block mb-1">
                 JSON Event Data:
               </span>
-              <pre className="p-3 bg-slate-900 text-[#BFE23A] rounded-xl overflow-x-auto text-[11px] font-mono leading-relaxed">
+              <pre className="p-3 bg-slate-900 text-[#789486] rounded-xl overflow-x-auto text-[11px] font-mono leading-relaxed">
                 {JSON.stringify(parseDetails(selectedLog.details), null, 2)}
               </pre>
             </div>

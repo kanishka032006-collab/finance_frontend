@@ -136,7 +136,7 @@ const StaffManagement = () => {
         {isAdmin && (
           <button
             onClick={openCreateModal}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-extrabold bg-[#BFE23A] hover:bg-[#aed12b] text-slate-950 shadow-sm transition"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-extrabold bg-[#789486] hover:bg-[#5E786B] text-white shadow-sm transition"
           >
             <Plus className="w-4 h-4 text-slate-950" />
             Add Staff Member
@@ -181,7 +181,7 @@ const StaffManagement = () => {
       <div className="bg-white rounded-2xl border border-stone-200 shadow-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-xs text-left">
-            <thead className="bg-[#FAF2E9]/70 border-b border-stone-200 text-slate-700 font-bold uppercase tracking-wider text-[10px]">
+            <thead className="bg-[#F8F8F5]/70 border-b border-stone-200 text-slate-700 font-bold uppercase tracking-wider text-[10px]">
               <tr>
                 <th className="py-3 px-4">User</th>
                 <th className="py-3 px-4">Contact</th>
@@ -345,7 +345,7 @@ const StaffManagement = () => {
                 id="activeToggle"
                 checked={formData.active}
                 onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
-                className="rounded border-stone-300 text-[#BFE23A] focus:ring-[#BFE23A]"
+                className="rounded border-stone-300 text-[#789486] focus:ring-[#789486]"
               />
               <label htmlFor="activeToggle" className="text-xs font-bold text-slate-700">
                 Active Account Enabled
@@ -364,7 +364,7 @@ const StaffManagement = () => {
             <button
               type="submit"
               disabled={formLoading}
-              className="px-4 py-2 text-xs font-bold bg-[#BFE23A] text-slate-950 rounded-xl hover:bg-[#aed12b]"
+              className="px-4 py-2 text-xs font-bold bg-[#789486] text-white rounded-xl hover:bg-[#aed12b]"
             >
               {formLoading ? 'Saving...' : editingUser ? 'Update Staff Member' : 'Create Staff Member'}
             </button>

@@ -3,11 +3,200 @@
 @tailwind utilities;
 
 @layer base {
+  html,
   body {
-    background-color: #F9EAD7;
-    color: #0F172A;
-    font-family: 'Inter', sans-serif;
+    background-color: #F5F7FC;
+    color: #17233C;
+    font-family: 'Inter', 'Noto Sans Tamil', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
   }
+
+  #root {
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+}
+
+/* ============================================================
+   CLEAN FINANCIAL NUMERICAL & CODE TYPOGRAPHY
+   ============================================================ */
+.font-num {
+  font-family: 'Plus Jakarta Sans', 'Inter', 'Noto Sans Tamil', sans-serif;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  letter-spacing: -0.015em;
+}
+
+.font-code {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   TAMIL TYPOGRAPHY – NOTO SERIF TAMIL (HEADINGS) & NOTO SANS TAMIL (BODY)
+   ============================================================ */
+html[lang="ta"] body,
+html[lang="ta"] p,
+html[lang="ta"] span,
+html[lang="ta"] div,
+html[lang="ta"] li,
+html[lang="ta"] td,
+html[lang="ta"] th,
+html[lang="ta"] input,
+html[lang="ta"] select,
+html[lang="ta"] textarea,
+html[lang="ta"] button,
+html[lang="ta"] a,
+html[lang="ta"] label {
+  font-family: 'Noto Sans Tamil', 'Inter', system-ui, sans-serif;
+  line-height: 1.65;
+  letter-spacing: 0.008em;
+  overflow-wrap: break-word;
+  word-break: keep-all;
+}
+
+html[lang="ta"] h1,
+html[lang="ta"] h2,
+html[lang="ta"] h3,
+html[lang="ta"] h4,
+html[lang="ta"] h5,
+html[lang="ta"] h6,
+html[lang="ta"] .tamil-heading {
+  font-family: 'Noto Serif Tamil', 'Noto Sans Tamil', Georgia, serif !important;
+  line-height: 1.42;
+  letter-spacing: 0.01em;
+  font-weight: 700;
+}
+
+/* Preserve crisp numerical & monospace typography for figures and codes in Tamil mode */
+html[lang="ta"] .font-num {
+  font-family: 'Plus Jakarta Sans', 'Inter', 'Noto Sans Tamil', sans-serif !important;
+  font-variant-numeric: tabular-nums lining-nums;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+html[lang="ta"] .font-mono,
+html[lang="ta"] .font-code {
+  font-family: 'JetBrains Mono', 'Noto Sans Tamil', monospace !important;
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+
+/* Prevent Tamil vowel diacritic clipping and awkward uppercase letter-spacing */
+html[lang="ta"] .uppercase {
+  text-transform: none;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+
+html[lang="ta"] .tracking-wider,
+html[lang="ta"] .tracking-widest {
+  letter-spacing: 0.012em;
+}
+
+html[lang="ta"] .truncate {
+  line-height: 1.6;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+/* Ensure Tamil micro-labels remain comfortable to read on mobile screens */
+html[lang="ta"] .text-\[10px\],
+html[lang="ta"] .text-\[9px\] {
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   PREMIUM SOFT PEARL CANVAS & BANKING SURFACES
+   ============================================================ */
+.tridin-3d-canvas {
+  background-color: #F5F7FC;
+  background-image:
+    radial-gradient(at 8% 6%, rgba(36, 70, 168, 0.07) 0px, transparent 46%),
+    radial-gradient(at 92% 10%, rgba(19, 168, 158, 0.07) 0px, transparent 44%),
+    radial-gradient(at 84% 86%, rgba(165, 139, 234, 0.09) 0px, transparent 48%),
+    radial-gradient(at 14% 88%, rgba(231, 169, 75, 0.06) 0px, transparent 44%);
+}
+
+.tridin-3d-shape-1 {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(165, 139, 234, 0.16));
+  border: 1px solid rgba(36, 70, 168, 0.12);
+  box-shadow:
+    0 24px 48px -12px rgba(23, 35, 60, 0.08),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(18px);
+  transform: perspective(900px) rotateX(14deg) rotateY(-18deg) rotateZ(12deg);
+}
+
+.tridin-3d-shape-2 {
+  background: linear-gradient(145deg, rgba(19, 168, 158, 0.14), rgba(36, 70, 168, 0.08));
+  border: 1px solid rgba(19, 168, 158, 0.22);
+  box-shadow:
+    0 30px 60px -15px rgba(23, 35, 60, 0.1),
+    inset 0 2px 4px rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px);
+  transform: perspective(1000px) rotateX(-12deg) rotateY(16deg);
+}
+
+.tridin-3d-orb {
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.92),
+    rgba(165, 139, 234, 0.22) 48%,
+    rgba(19, 168, 158, 0.15) 100%
+  );
+  box-shadow:
+    0 25px 50px -12px rgba(36, 70, 168, 0.1),
+    inset -8px -8px 20px rgba(23, 35, 60, 0.04);
+}
+
+.shadow-card {
+  box-shadow:
+    0 8px 24px -8px rgba(23, 35, 60, 0.07),
+    0 2px 6px -1px rgba(36, 70, 168, 0.04);
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.22s ease;
+}
+
+@media (hover: hover) {
+  .shadow-card:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 16px 34px -10px rgba(36, 70, 168, 0.12),
+      0 4px 12px -2px rgba(19, 168, 158, 0.08);
+  }
+}
+
+.finance-surface {
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F4;
+  border-radius: 1.25rem;
+}
+
+.btn-royal {
+  background: linear-gradient(135deg, #2446A8 0%, #345BD1 100%);
+  color: #FFFFFF;
+  box-shadow: 0 8px 20px -6px rgba(36, 70, 168, 0.45);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+
+.btn-royal:hover:not(:disabled) {
+  filter: brightness(1.06);
+  box-shadow: 0 10px 24px -6px rgba(36, 70, 168, 0.52);
+}
+
+.btn-teal {
+  background: linear-gradient(135deg, #13A89E 0%, #0E8F86 100%);
+  color: #FFFFFF;
+  box-shadow: 0 8px 20px -6px rgba(19, 168, 158, 0.42);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+
+.btn-teal:hover:not(:disabled) {
+  filter: brightness(1.05);
+  box-shadow: 0 10px 24px -6px rgba(19, 168, 158, 0.5);
 }
 
 /* Custom scrollbar */
@@ -16,33 +205,38 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1ede8;
+  background: #EBF0FA;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 3px;
+  background: #A58BEA;
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #2446A8;
+}
+
+/* Hide scrollbars inside horizontal pill scrollers while preserving scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* ============================================================
    TRIDIN FINANCE – PRINT / PDF STYLES
    ============================================================ */
-
-/* Page settings – must be outside @media to satisfy all CSS linters */
 @page {
   size: A4 portrait;
   margin: 15mm 12mm;
 }
 
 @media print {
-  /* ── Hide everything first ── */
   body * {
     visibility: hidden;
   }
 
-  /* ── Receipt modal (legacy) ── */
   #printable-receipt,
   #printable-receipt * {
     visibility: visible;
@@ -57,7 +251,6 @@
     background: white;
   }
 
-  /* ── Full-page printable areas ── */
   body.tridin-printing .tridin-print-target,
   body.tridin-printing .tridin-print-target * {
     visibility: visible;
@@ -74,43 +267,39 @@
     border-radius: 0 !important;
   }
 
-  /* ── Always hide action buttons when printing ── */
   .no-print,
   button.no-print,
   [data-no-print] {
     display: none !important;
   }
 
-  /* ── Table improvements ── */
   table {
     border-collapse: collapse;
     width: 100%;
   }
   th,
   td {
-    border: 1px solid #e2e8f0;
+    border: 1px solid #E2E8F4;
     padding: 6px 10px;
     font-size: 11px;
   }
   thead {
-    background-color: #f8fafc !important;
+    background-color: #F5F7FC !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
 
-  /* ── Colors: force brand colours in print ── */
   .print-brand-green {
-    background-color: #BFE23A !important;
+    background-color: #13A89E !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
   .print-brand-red {
-    color: #E10600 !important;
+    color: #E45B68 !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
 
-  /* ── Page breaks ── */
   .print-break-before {
     page-break-before: always;
   }

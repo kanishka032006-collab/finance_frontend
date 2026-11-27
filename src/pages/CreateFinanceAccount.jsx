@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Landmark, ArrowLeft, Calculator, Calendar, Save, ShieldAlert, CheckCircle, Info } from 'lucide-react';
+import { Landmark, ArrowLeft, Calendar, Save, ShieldAlert, CheckCircle } from 'lucide-react';
 import api from '../services/api';
 
 const CreateFinanceAccount = () => {
@@ -19,6 +19,9 @@ const CreateFinanceAccount = () => {
   });
   const [dueDay, setDueDay] = useState('Monday');
   const [notes, setNotes] = useState('');
+  const [loanType, setLoanType] = useState('WEEKLY_COLLECTION');
+  const [interestRate, setInterestRate] = useState('');
+  const [collectionFrequency, setCollectionFrequency] = useState('WEEKLY');
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -26,11 +29,13 @@ const CreateFinanceAccount = () => {
 
   const navigate = useNavigate();
 
-  // Load customer list
   useEffect(() => {
-    api.get('/settings').then(({ data }) => {
-      if (data.success && data.settings.defaultDueDay) setDueDay(data.settings.defaultDueDay);
-    }).catch((err) => console.error('Failed to load default due day:', err));
+    api
+      .get('/settings')
+      .then(({ data }) => {
+        if (data.success && data.settings.defaultDueDay) setDueDay(data.settings.defaultDueDay);
+      })
+      .catch((err) => console.error('Failed to load default due day:', err));
   }, []);
 
   useEffect(() => {
@@ -52,7 +57,6 @@ const CreateFinanceAccount = () => {
     loadCustomers();
   }, [preSelectedCustomerId]);
 
-  // Derived financial calculations
   const repaymentNum = parseFloat(agreedRepayment) || 0;
   const disbursedNum = parseFloat(actualDisbursed) || 0;
   const weeksNum = parseInt(totalWeeks, 10) || 1;
@@ -60,7 +64,6 @@ const CreateFinanceAccount = () => {
   const grossDifference = Math.max(0, repaymentNum - disbursedNum);
   const weeklyInstalment = weeksNum > 0 ? Math.round((repaymentNum / weeksNum) * 100) / 100 : 0;
 
-  // Auto-generate preview schedule
   const schedulePreview = [];
   if (repaymentNum > 0 && weeksNum > 0 && firstDueDate) {
     const start = new Date(firstDueDate);
@@ -77,7 +80,7 @@ const CreateFinanceAccount = () => {
       schedulePreview.push({
         week: i,
         dueDate: d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
-        amount: amt
+        amount: amt,
       });
     }
   }
@@ -106,7 +109,10 @@ const CreateFinanceAccount = () => {
         totalWeeks: weeksNum,
         firstDueDate: new Date(firstDueDate).toISOString(),
         dueDay,
-        notes
+        notes,
+        loanType,
+        interestRate: interestRate ? parseFloat(interestRate) : null,
+        collectionFrequency,
       };
 
       const res = await api.post('/accounts', payload);
@@ -122,69 +128,127 @@ const CreateFinanceAccount = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
-      {/* Top Bar */}
+    <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
       <div className="flex items-center justify-between">
         <button
+          type="button"
           onClick={() => navigate('/accounts')}
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-slate-900 transition"
+          className="inline-flex items-center gap-1.5 min-h-[40px] px-3 py-1.5 rounded-xl text-xs font-bold text-[#718096] hover:text-[#2446A8] hover:bg-white border border-transparent hover:border-[#E2E8F4] transition"
         >
-          <ArrowLeft className="w-4 h-4" /> Back to Accounts
+          <ArrowLeft className="w-4 h-4" />
+          <span>Back</span>
         </button>
       </div>
 
-      <div className="bg-white rounded-2xl border border-stone-200 shadow-card p-6 sm:p-8">
-        <div className="flex items-center gap-3 border-b border-stone-100 pb-5 mb-6">
-          <div className="w-10 h-10 rounded-xl bg-slate-900 text-[#BFE23A] font-extrabold flex items-center justify-center text-lg shadow-sm">
+      <div className="bg-white rounded-2xl border border-[#E2E8F4] shadow-card p-4 sm:p-8 relative overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#2446A8] via-[#A58BEA] to-[#13A89E]" />
+        <div className="flex items-center gap-3 border-b border-[#E2E8F4] pb-4 sm:pb-5 mb-5 sm:mb-6">
+          <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#2446A8] to-[#13A89E] text-white font-extrabold flex items-center justify-center shadow-sm shrink-0">
             <Landmark className="w-5 h-5" />
           </div>
-          <div>
-            <h1 className="text-xl font-black text-slate-900 tracking-tight">Create Finance Account</h1>
-            <p className="text-xs text-slate-500">
+          <div className="min-w-0">
+            <h1 className="text-lg sm:text-xl font-black text-[#17233C] tracking-tight">
+              Create Finance Account
+            </h1>
+            <p className="text-xs text-[#718096]">
               Contract creation with automatic Gross Difference & Weekly Schedule generation
             </p>
           </div>
         </div>
 
         {error && (
-          <div className="mb-6 p-3.5 rounded-xl bg-red-50 border border-red-200 flex items-start gap-2.5 text-xs text-[#E10600]">
+          <div className="mb-5 p-3.5 rounded-xl bg-[#FDF0F1] border border-[#E45B68]/35 flex items-start gap-2.5 text-xs text-[#C93D4B]">
             <ShieldAlert className="w-4 h-4 shrink-0 mt-0.5" />
             <span>{error}</span>
           </div>
         )}
 
         {success && (
-          <div className="mb-6 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-start gap-2.5 text-xs text-emerald-800">
-            <CheckCircle className="w-4 h-4 shrink-0 mt-0.5 text-emerald-600" />
+          <div className="mb-5 p-3.5 rounded-xl bg-[#E6F8F7] border border-[#13A89E]/35 flex items-start gap-2.5 text-xs text-[#0D857D] font-semibold">
+            <CheckCircle className="w-4 h-4 shrink-0 mt-0.5 text-[#13A89E]" />
             <span>{success}</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Customer Selection */}
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-bold text-[#17233C] uppercase tracking-wider mb-1.5">
               Select Customer / Borrower *
             </label>
             <select
               value={selectedCustomer}
               onChange={(e) => setSelectedCustomer(e.target.value)}
               required
-              className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#BFE23A] bg-stone-50/50 font-medium"
+              className="w-full min-h-[44px] px-3.5 py-2.5 text-sm rounded-xl border border-[#DCE4F2] focus:outline-none focus:ring-2 focus:ring-[#2446A8] bg-[#F5F7FC] text-[#17233C] font-medium"
             >
               <option value="">-- Choose Borrower --</option>
               {customers.map((c) => (
                 <option key={c.id} value={c.id}>
-                  {c.name} ({c.customerCode}) - Mobile: {c.mobile}
+                  {c.name} ({c.customerCode}) - {c.mobile}
                 </option>
               ))}
             </select>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {/* Agreed Repayment Amount */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-bold text-[#17233C] uppercase tracking-wider mb-1.5">
+                Loan Type *
+              </label>
+              <select
+                value={loanType}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setLoanType(val);
+                  if (val === 'DAILY_COLLECTION') setCollectionFrequency('DAILY');
+                  else if (val === 'MONTHLY_COLLECTION' || val === 'MONTHLY_INTEREST')
+                    setCollectionFrequency('MONTHLY');
+                  else setCollectionFrequency('WEEKLY');
+                }}
+                className="w-full min-h-[44px] px-3.5 py-2.5 text-sm rounded-xl border border-[#DCE4F2] focus:outline-none focus:ring-2 focus:ring-[#2446A8] bg-[#F5F7FC] text-[#17233C] font-medium"
+              >
+                <option value="WEEKLY_COLLECTION">Weekly Collection Loan</option>
+                <option value="DAILY_COLLECTION">Daily Collection Loan</option>
+                <option value="MONTHLY_COLLECTION">Monthly Collection Loan</option>
+                <option value="MONTHLY_INTEREST">Monthly Interest Loan</option>
+                <option value="GOLD_LOAN">Gold Loan</option>
+                <option value="AUTO_FINANCE">Auto Finance Loan</option>
+                <option value="ENTERPRISE">Enterprise Loan</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-[#17233C] uppercase tracking-wider mb-1.5">
+                Repayment Frequency *
+              </label>
+              <select
+                value={collectionFrequency}
+                onChange={(e) => setCollectionFrequency(e.target.value)}
+                className="w-full min-h-[44px] px-3.5 py-2.5 text-sm rounded-xl border border-[#DCE4F2] focus:outline-none focus:ring-2 focus:ring-[#2446A8] bg-[#F5F7FC] text-[#17233C] font-medium"
+              >
+                <option value="DAILY">Daily</option>
+                <option value="WEEKLY">Weekly</option>
+                <option value="MONTHLY">Monthly</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-[#17233C] uppercase tracking-wider mb-1.5">
+                Interest Rate (% Optional)
+              </label>
+              <input
+                type="number"
+                step="0.01"
+                min="0"
+                value={interestRate}
+                onChange={(e) => setInterestRate(e.target.value)}
+                placeholder="e.g. 2.5"
+                className="w-full min-h-[44px] px-3.5 py-2.5 text-sm font-num font-bold rounded-xl border border-[#DCE4F2] focus:outline-none focus:ring-2 focus:ring-[#2446A8] bg-[#F5F7FC] text-[#17233C]"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-bold text-[#17233C] uppercase tracking-wider mb-1.5">
                 Agreed Repayment Amount (₹) *
               </label>
               <input
@@ -195,14 +259,13 @@ const CreateFinanceAccount = () => {
                 value={agreedRepayment}
                 onChange={(e) => setAgreedRepayment(e.target.value)}
                 placeholder="e.g. 10000"
-                className="w-full px-3.5 py-2.5 text-sm font-mono font-bold rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#BFE23A] bg-stone-50/50"
+                className="w-full min-h-[44px] px-3.5 py-2.5 text-sm font-num font-bold rounded-xl border border-[#DCE4F2] focus:outline-none focus:ring-2 focus:ring-[#2446A8] bg-[#F5F7FC] text-[#17233C]"
               />
-              <span className="text-[11px] text-slate-400 mt-1 block">Contractual repayment sum to collect</span>
+              <span className="text-[11px] text-[#718096] mt-1 block">Contractual repayment sum to collect</span>
             </div>
 
-            {/* Actual Disbursed Amount */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-bold text-[#17233C] uppercase tracking-wider mb-1.5">
                 Actual Disbursed Amount (₹) *
               </label>
               <input
@@ -213,45 +276,44 @@ const CreateFinanceAccount = () => {
                 value={actualDisbursed}
                 onChange={(e) => setActualDisbursed(e.target.value)}
                 placeholder="e.g. 8200"
-                className="w-full px-3.5 py-2.5 text-sm font-mono font-bold rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#BFE23A] bg-stone-50/50"
+                className="w-full min-h-[44px] px-3.5 py-2.5 text-sm font-num font-bold rounded-xl border border-[#DCE4F2] focus:outline-none focus:ring-2 focus:ring-[#2446A8] bg-[#F5F7FC] text-[#17233C]"
               />
-              <span className="text-[11px] text-slate-400 mt-1 block">Amount handed to the borrower</span>
+              <span className="text-[11px] text-[#718096] mt-1 block">Amount handed to the borrower</span>
             </div>
           </div>
 
           {/* Automatic Calculation Banner */}
-          <div className="bg-[#FAF2E9] border border-stone-200 rounded-xl p-4 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+          <div className="bg-[#F5F7FC] border border-[#E2E8F4] rounded-2xl p-4 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 text-xs">
             <div>
-              <span className="text-slate-500 block">Gross Difference:</span>
-              <span className="text-base font-black text-purple-800 font-mono">
+              <span className="text-[#718096] block">Gross Difference:</span>
+              <span className="text-base font-extrabold text-[#6E4BC4] font-num">
                 ₹{grossDifference.toLocaleString('en-IN')}
               </span>
-              <span className="text-[10px] text-slate-400 block">Repayment - Disbursed</span>
+              <span className="text-[10px] text-[#718096] block">Repayment - Disbursed</span>
             </div>
             <div>
-              <span className="text-slate-500 block">Total Weeks:</span>
-              <span className="text-base font-black text-slate-900 font-mono">{weeksNum} Weeks</span>
+              <span className="text-[#718096] block">Total Weeks:</span>
+              <span className="text-base font-extrabold text-[#17233C] font-num">{weeksNum} Weeks</span>
             </div>
             <div>
-              <span className="text-slate-500 block">Weekly Instalment:</span>
-              <span className="text-base font-black text-emerald-700 font-mono">
+              <span className="text-[#718096] block">Weekly Installment</span>
+              <span className="text-base font-extrabold text-[#0D857D] font-num">
                 ₹{weeklyInstalment.toLocaleString('en-IN')}
               </span>
-              <span className="text-[10px] text-slate-400 block">per week</span>
+              <span className="text-[10px] text-[#718096] block">per week</span>
             </div>
             <div>
-              <span className="text-slate-500 block">Schedule Validation:</span>
-              <span className="text-xs font-bold text-emerald-800 inline-flex items-center gap-1 mt-1">
-                <CheckCircle className="w-3.5 h-3.5 text-emerald-600" />
+              <span className="text-[#718096] block">Schedule Validation:</span>
+              <span className="text-xs font-bold text-[#0D857D] inline-flex items-center gap-1 mt-1">
+                <CheckCircle className="w-3.5 h-3.5 text-[#13A89E]" />
                 100% Balanced
               </span>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-            {/* Number of Weeks */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-bold text-[#17233C] uppercase tracking-wider mb-1.5">
                 Number of Weeks *
               </label>
               <input
@@ -262,13 +324,12 @@ const CreateFinanceAccount = () => {
                 value={totalWeeks}
                 onChange={(e) => setTotalWeeks(e.target.value)}
                 placeholder="10"
-                className="w-full px-3.5 py-2.5 text-sm font-bold rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#BFE23A] bg-stone-50/50"
+                className="w-full min-h-[44px] px-3.5 py-2.5 text-sm font-num font-bold rounded-xl border border-[#DCE4F2] focus:outline-none focus:ring-2 focus:ring-[#2446A8] bg-[#F5F7FC] text-[#17233C]"
               />
             </div>
 
-            {/* First Due Date */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-bold text-[#17233C] uppercase tracking-wider mb-1.5">
                 First Due Date *
               </label>
               <input
@@ -276,19 +337,18 @@ const CreateFinanceAccount = () => {
                 required
                 value={firstDueDate}
                 onChange={(e) => setFirstDueDate(e.target.value)}
-                className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#BFE23A] bg-stone-50/50 font-medium"
+                className="w-full min-h-[44px] px-3.5 py-2.5 text-sm rounded-xl border border-[#DCE4F2] focus:outline-none focus:ring-2 focus:ring-[#2446A8] bg-[#F5F7FC] text-[#17233C] font-medium"
               />
             </div>
 
-            {/* Due Day */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-bold text-[#17233C] uppercase tracking-wider mb-1.5">
                 Collection Due Day *
               </label>
               <select
                 value={dueDay}
                 onChange={(e) => setDueDay(e.target.value)}
-                className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#BFE23A] bg-stone-50/50 font-medium"
+                className="w-full min-h-[44px] px-3.5 py-2.5 text-sm rounded-xl border border-[#DCE4F2] focus:outline-none focus:ring-2 focus:ring-[#2446A8] bg-[#F5F7FC] text-[#17233C] font-medium"
               >
                 <option value="Monday">Monday</option>
                 <option value="Tuesday">Tuesday</option>
@@ -301,53 +361,56 @@ const CreateFinanceAccount = () => {
             </div>
           </div>
 
-          {/* Internal Notes */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-              Internal Account Notes
+            <label className="block text-xs font-bold text-[#17233C] uppercase tracking-wider mb-1.5">
+              Internal Collection Notes
             </label>
             <textarea
               rows={2}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Credit assessment comments, guarantor reference, business purpose..."
-              className="w-full px-3.5 py-2 text-sm rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#BFE23A] bg-stone-50/50"
+              className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-[#DCE4F2] focus:outline-none focus:ring-2 focus:ring-[#2446A8] bg-[#F5F7FC] text-[#17233C]"
             />
           </div>
 
           {/* Schedule Preview Section */}
           <div>
-            <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5 text-slate-500" />
-              Generated Weekly Repayment Schedule Preview (First {schedulePreview.length} Weeks)
+            <h4 className="text-xs font-bold text-[#17233C] uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+              <Calendar className="w-3.5 h-3.5 text-[#2446A8]" />
+              <span>Generated Weekly Repayment Schedule Preview (First {schedulePreview.length} Weeks)</span>
             </h4>
-            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2">
+            <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2">
               {schedulePreview.map((item) => (
-                <div key={item.week} className="p-2.5 rounded-xl border border-stone-200 bg-stone-50 text-center text-xs">
-                  <span className="font-bold text-slate-700 block">Week {item.week}</span>
-                  <span className="text-[10px] text-slate-500 block">{item.dueDate}</span>
-                  <span className="font-mono font-bold text-emerald-700 block mt-1">₹{item.amount}</span>
+                <div
+                  key={item.week}
+                  className="p-2.5 rounded-xl border border-[#E2E8F4] bg-[#F5F7FC] text-center text-xs"
+                >
+                  <span className="font-bold text-[#17233C] block">Week {item.week}</span>
+                  <span className="text-[10px] text-[#718096] block font-num">{item.dueDate}</span>
+                  <span className="font-num font-extrabold text-[#0D857D] block mt-1">₹{item.amount}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Submit Buttons */}
-          <div className="pt-4 border-t border-stone-100 flex items-center justify-end gap-3">
+          <div className="pt-4 border-t border-[#E2E8F4] flex flex-col-reverse xs:flex-row items-stretch xs:items-center justify-end gap-2.5 sm:gap-3">
             <button
               type="button"
               onClick={() => navigate('/accounts')}
-              className="px-5 py-2.5 rounded-xl border border-stone-200 text-xs font-bold text-slate-600 hover:bg-stone-50 transition"
+              className="min-h-[44px] px-5 py-2.5 rounded-xl border border-[#E2E8F4] text-xs font-bold text-[#718096] hover:text-[#17233C] hover:bg-[#F5F7FC] transition"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black bg-[#BFE23A] hover:bg-[#aed12b] text-slate-950 shadow-sm transition disabled:opacity-50"
+              className="inline-flex items-center justify-center gap-2 min-h-[44px] px-6 py-2.5 rounded-xl text-xs font-extrabold btn-teal disabled:opacity-50"
             >
               <Save className="w-4 h-4" />
-              {loading ? 'Generating Schedule & Creating Account...' : 'Create Finance Account'}
+              <span>
+                {loading ? 'Generating Schedule & Creating Account...' : 'Create Finance Account'}
+              </span>
             </button>
           </div>
         </form>

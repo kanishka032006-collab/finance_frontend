@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Users,
   Search,
   Plus,
-  Filter,
   Eye,
   Edit,
   UserX,
   Phone,
   MapPin,
-  CheckCircle,
-  AlertTriangle,
-  Building
 } from 'lucide-react';
 import api from '../services/api';
 import StatusBadge from '../components/common/StatusBadge';
@@ -38,7 +33,7 @@ const Customers = () => {
         limit: 10,
         ...(search && { search }),
         ...(kycFilter && { kycStatus: kycFilter }),
-        ...(activeFilter !== '' && { active: activeFilter })
+        ...(activeFilter !== '' && { active: activeFilter }),
       };
       const res = await api.get('/customers', { params });
       if (res.data.success) {
@@ -77,43 +72,47 @@ const Customers = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-stone-200 shadow-card">
-        <div>
-          <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Client Portfolio</span>
-          <h1 className="text-2xl font-black text-slate-900 tracking-tight">Customer Management</h1>
-          <p className="text-xs text-slate-500 mt-0.5">Directory of registered borrowers, KYC verification & credit balances</p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 sm:p-6 rounded-2xl border border-[#E2E8F4] shadow-card relative overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#2446A8] to-[#13A89E]" />
+        <div className="min-w-0">
+          <span className="text-[11px] font-bold text-[#2446A8] uppercase tracking-wider">Client Portfolio</span>
+          <h1 className="text-xl sm:text-2xl font-black text-[#17233C] tracking-tight">Customer Management</h1>
+          <p className="text-xs text-[#718096] mt-0.5">
+            Directory of registered borrowers, KYC verification & credit balances
+          </p>
         </div>
         {canPerformTransactions && (
           <button
+            type="button"
             onClick={() => navigate('/customers/new')}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-extrabold bg-[#BFE23A] hover:bg-[#aed12b] text-slate-950 shadow-sm transition self-start sm:self-auto"
+            className="inline-flex items-center justify-center gap-2 min-h-[42px] px-4 py-2 rounded-xl text-xs font-extrabold btn-teal self-stretch sm:self-auto"
           >
-            <Plus className="w-4 h-4 text-slate-950" />
-            Add New Customer
+            <Plus className="w-4 h-4 text-white shrink-0" />
+            <span>Add Customer</span>
           </button>
         )}
       </div>
 
       {/* Search and Filters Bar */}
-      <div className="bg-white p-4 rounded-2xl border border-stone-200 shadow-card space-y-3">
-        <form onSubmit={handleSearchSubmit} className="flex flex-col sm:flex-row gap-3">
-          <div className="relative flex-1">
-            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+      <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-[#E2E8F4] shadow-card">
+        <form onSubmit={handleSearchSubmit} className="flex flex-col md:flex-row gap-2.5 sm:gap-3">
+          <div className="relative flex-1 min-w-0">
+            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#718096]" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by customer name, code (CUST-0001), or mobile..."
-              className="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-[#BFE23A] bg-stone-50/50"
+              className="w-full min-h-[42px] pl-10 pr-4 py-2 text-xs sm:text-sm rounded-xl border border-[#DCE4F2] focus:outline-none focus:ring-2 focus:ring-[#2446A8] bg-[#F5F7FC] text-[#17233C]"
             />
           </div>
-          <div className="flex gap-2">
+          <div className="grid grid-cols-1 xs:grid-cols-2 sm:flex gap-2">
             <select
               value={kycFilter}
               onChange={(e) => setKycFilter(e.target.value)}
-              className="px-3 py-2 text-xs rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-[#BFE23A] bg-stone-50/50 text-slate-700"
+              className="min-h-[42px] px-3 py-2 text-xs rounded-xl border border-[#DCE4F2] focus:outline-none focus:ring-2 focus:ring-[#2446A8] bg-[#F5F7FC] text-[#17233C] font-medium"
             >
               <option value="">All KYC Statuses</option>
               <option value="VERIFIED">Verified</option>
@@ -123,7 +122,7 @@ const Customers = () => {
             <select
               value={activeFilter}
               onChange={(e) => setActiveFilter(e.target.value)}
-              className="px-3 py-2 text-xs rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-[#BFE23A] bg-stone-50/50 text-slate-700"
+              className="min-h-[42px] px-3 py-2 text-xs rounded-xl border border-[#DCE4F2] focus:outline-none focus:ring-2 focus:ring-[#2446A8] bg-[#F5F7FC] text-[#17233C] font-medium"
             >
               <option value="">All Accounts</option>
               <option value="true">Active Only</option>
@@ -131,7 +130,7 @@ const Customers = () => {
             </select>
             <button
               type="submit"
-              className="px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-bold hover:bg-slate-800 transition"
+              className="xs:col-span-2 sm:col-span-1 min-h-[42px] px-4 py-2 rounded-xl text-xs font-bold btn-royal"
             >
               Search
             </button>
@@ -139,11 +138,123 @@ const Customers = () => {
         </form>
       </div>
 
-      {/* Customer Data Table */}
-      <div className="bg-white rounded-2xl border border-stone-200 shadow-card overflow-hidden">
-        <div className="overflow-x-auto">
+      {/* Customer Cards (Mobile) & Table (Desktop) */}
+      <div className="bg-white rounded-2xl border border-[#E2E8F4] shadow-card overflow-hidden">
+        {/* Mobile Cards View */}
+        <div className="md:hidden divide-y divide-[#E2E8F4]">
+          {loading ? (
+            <div className="py-12 px-4 text-center text-xs text-[#718096]">
+              <div className="inline-block w-6 h-6 border-2 border-[#E2E8F4] border-t-[#2446A8] rounded-full animate-spin mr-2 align-middle" />
+              Loading...
+            </div>
+          ) : customers.length === 0 ? (
+            <div className="py-12 px-4 text-center text-xs text-[#718096] font-medium">
+              No records found
+            </div>
+          ) : (
+            customers.map((c) => (
+              <div key={c.id} className="p-4 space-y-3 hover:bg-[#F5F7FC]/60 transition">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="w-10 h-10 rounded-xl bg-[#EEF2FC] text-[#2446A8] border border-[#2446A8]/15 font-extrabold flex items-center justify-center text-sm shrink-0">
+                      {c.name ? c.name[0] : 'C'}
+                    </div>
+                    <div className="min-w-0">
+                      <button
+                        type="button"
+                        onClick={() => navigate(`/customers/${c.id}`)}
+                        className="font-bold text-sm text-[#17233C] hover:text-[#2446A8] text-left block truncate max-w-full"
+                      >
+                        {c.name}
+                      </button>
+                      <span className="font-code text-[11px] text-[#718096]">{c.customerCode}</span>
+                    </div>
+                  </div>
+                  <StatusBadge status={c.kycStatus} />
+                </div>
+
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-[#718096]">
+                  <a href={`tel:${c.mobile}`} className="flex items-center gap-1 text-[#2446A8] font-semibold font-num">
+                    <Phone className="w-3.5 h-3.5" />
+                    <span>{c.mobile}</span>
+                  </a>
+                  <span className="flex items-center gap-1 truncate max-w-full">
+                    <MapPin className="w-3.5 h-3.5 shrink-0" />
+                    <span className="truncate">{c.address}</span>
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 bg-[#F5F7FC] border border-[#E2E8F4] rounded-xl p-3 text-xs">
+                  <div>
+                    <span className="text-[10px] font-bold text-[#718096] uppercase block">Total Agreed</span>
+                    <span className="font-num font-bold text-[#17233C]">
+                      ₹{c.totalAgreed?.toLocaleString('en-IN')}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-bold text-[#718096] uppercase block">Total Paid</span>
+                    <span className="font-num font-bold text-[#0D857D]">
+                      ₹{c.totalPaid?.toLocaleString('en-IN')}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-bold text-[#718096] uppercase block">Outstanding</span>
+                    <span className="font-num font-extrabold text-[#B87718]">
+                      ₹{c.outstandingBalance?.toLocaleString('en-IN')}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-bold text-[#718096] uppercase block">Overdue</span>
+                    <span className={`font-num font-extrabold ${c.overdueAmount > 0 ? 'text-[#C93D4B]' : 'text-[#718096]'}`}>
+                      ₹{(c.overdueAmount || 0).toLocaleString('en-IN')}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
+                  <span className="text-[11px] font-semibold text-[#718096]">
+                    Accounts: <strong className="font-num text-[#17233C]">{c.totalAccounts}</strong>
+                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => navigate(`/customers/${c.id}`)}
+                      className="inline-flex items-center gap-1 min-h-[38px] px-3 py-1.5 rounded-xl bg-[#EEF2FC] text-[#2446A8] text-xs font-bold"
+                    >
+                      <Eye className="w-3.5 h-3.5" />
+                      <span>View Profile</span>
+                    </button>
+                    {canPerformTransactions && (
+                      <button
+                        type="button"
+                        onClick={() => navigate(`/customers/new?edit=${c.id}`)}
+                        title="Edit Customer"
+                        className="min-w-[38px] min-h-[38px] flex items-center justify-center rounded-xl border border-[#E2E8F4] text-[#17233C] hover:bg-[#F5F7FC]"
+                      >
+                        <Edit className="w-4 h-4" />
+                      </button>
+                    )}
+                    {isAdmin && c.active && (
+                      <button
+                        type="button"
+                        onClick={() => handleDeactivate(c.id, c.name)}
+                        title="Deactivate Customer"
+                        className="min-w-[38px] min-h-[38px] flex items-center justify-center rounded-xl border border-[#E45B68]/30 bg-[#FDF0F1] text-[#C93D4B]"
+                      >
+                        <UserX className="w-4 h-4" />
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* Desktop Table View */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-xs text-left">
-            <thead className="bg-[#FAF2E9]/60 border-b border-stone-200 text-slate-700 font-bold uppercase tracking-wider text-[10px]">
+            <thead className="bg-[#F5F7FC] border-b border-[#E2E8F4] text-[#718096] font-bold uppercase tracking-wider text-[10px]">
               <tr>
                 <th className="py-3.5 px-4">Customer</th>
                 <th className="py-3.5 px-4">Contact & Address</th>
@@ -156,47 +267,47 @@ const Customers = () => {
                 <th className="py-3.5 px-4 text-center">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-stone-100">
+            <tbody className="divide-y divide-[#E2E8F4]">
               {loading ? (
                 <tr>
-                  <td colSpan={9} className="py-12 text-center text-slate-400">
-                    <div className="inline-block w-6 h-6 border-2 border-slate-900 border-t-[#BFE23A] rounded-full animate-spin mr-2" />
-                    Loading customers...
+                  <td colSpan={9} className="py-12 text-center text-[#718096]">
+                    <div className="inline-block w-6 h-6 border-2 border-[#E2E8F4] border-t-[#2446A8] rounded-full animate-spin mr-2 align-middle" />
+                    Loading...
                   </td>
                 </tr>
               ) : customers.length === 0 ? (
                 <tr>
-                  <td colSpan={9} className="py-12 text-center text-slate-400 font-medium">
-                    No customers found matching the criteria.
+                  <td colSpan={9} className="py-12 text-center text-[#718096] font-medium">
+                    No records found
                   </td>
                 </tr>
               ) : (
                 customers.map((c) => (
-                  <tr key={c.id} className="hover:bg-[#FAF2E9]/20 transition">
+                  <tr key={c.id} className="hover:bg-[#F5F7FC]/70 transition">
                     <td className="py-3.5 px-4">
                       <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-lg bg-slate-100 text-slate-800 font-bold flex items-center justify-center text-xs shrink-0">
+                        <div className="w-8 h-8 rounded-lg bg-[#EEF2FC] text-[#2446A8] border border-[#2446A8]/15 font-bold flex items-center justify-center text-xs shrink-0">
                           {c.name ? c.name[0] : 'C'}
                         </div>
                         <div>
                           <span
                             onClick={() => navigate(`/customers/${c.id}`)}
-                            className="font-bold text-slate-900 hover:text-slate-600 cursor-pointer block"
+                            className="font-bold text-[#17233C] hover:text-[#2446A8] cursor-pointer block"
                           >
                             {c.name}
                           </span>
-                          <span className="font-mono text-[10px] text-slate-400">{c.customerCode}</span>
+                          <span className="font-code text-[10px] text-[#718096]">{c.customerCode}</span>
                         </div>
                       </div>
                     </td>
                     <td className="py-3.5 px-4">
                       <div className="space-y-0.5">
-                        <div className="flex items-center gap-1 text-slate-700 font-medium">
-                          <Phone className="w-3 h-3 text-slate-400" />
+                        <div className="flex items-center gap-1 text-[#17233C] font-medium font-num">
+                          <Phone className="w-3 h-3 text-[#2446A8]" />
                           <span>{c.mobile}</span>
                         </div>
-                        <div className="flex items-center gap-1 text-[11px] text-slate-400 truncate max-w-xs">
-                          <MapPin className="w-3 h-3 text-slate-400 shrink-0" />
+                        <div className="flex items-center gap-1 text-[11px] text-[#718096] truncate max-w-xs">
+                          <MapPin className="w-3 h-3 text-[#718096] shrink-0" />
                           <span className="truncate">{c.address}</span>
                         </div>
                       </div>
@@ -204,50 +315,53 @@ const Customers = () => {
                     <td className="py-3.5 px-4">
                       <StatusBadge status={c.kycStatus} />
                     </td>
-                    <td className="py-3.5 px-4 text-center font-bold text-slate-700">
+                    <td className="py-3.5 px-4 text-center font-num font-bold text-[#17233C]">
                       {c.totalAccounts}
                     </td>
-                    <td className="py-3.5 px-4 text-right font-mono font-medium text-slate-700">
+                    <td className="py-3.5 px-4 text-right font-num font-semibold text-[#17233C]">
                       ₹{c.totalAgreed?.toLocaleString('en-IN')}
                     </td>
-                    <td className="py-3.5 px-4 text-right font-mono font-medium text-emerald-700">
+                    <td className="py-3.5 px-4 text-right font-num font-bold text-[#0D857D]">
                       ₹{c.totalPaid?.toLocaleString('en-IN')}
                     </td>
-                    <td className="py-3.5 px-4 text-right font-mono font-bold text-slate-900">
+                    <td className="py-3.5 px-4 text-right font-num font-bold text-[#B87718]">
                       ₹{c.outstandingBalance?.toLocaleString('en-IN')}
                     </td>
-                    <td className="py-3.5 px-4 text-right font-mono">
+                    <td className="py-3.5 px-4 text-right font-num">
                       {c.overdueAmount > 0 ? (
-                        <span className="font-bold text-[#E10600]">
+                        <span className="font-bold text-[#C93D4B]">
                           ₹{c.overdueAmount?.toLocaleString('en-IN')}
                         </span>
                       ) : (
-                        <span className="text-slate-400">₹0</span>
+                        <span className="text-[#718096]">₹0</span>
                       )}
                     </td>
                     <td className="py-3.5 px-4 text-center">
                       <div className="flex items-center justify-center gap-1.5">
                         <button
+                          type="button"
                           onClick={() => navigate(`/customers/${c.id}`)}
                           title="View Profile"
-                          className="p-1.5 rounded-lg text-slate-600 hover:bg-stone-100 transition"
+                          className="p-1.5 rounded-lg text-[#2446A8] hover:bg-[#EEF2FC] transition"
                         >
                           <Eye className="w-4 h-4" />
                         </button>
                         {canPerformTransactions && (
                           <button
+                            type="button"
                             onClick={() => navigate(`/customers/new?edit=${c.id}`)}
                             title="Edit Customer"
-                            className="p-1.5 rounded-lg text-slate-600 hover:bg-stone-100 transition"
+                            className="p-1.5 rounded-lg text-[#17233C] hover:bg-[#F5F7FC] transition"
                           >
                             <Edit className="w-4 h-4" />
                           </button>
                         )}
                         {isAdmin && c.active && (
                           <button
+                            type="button"
                             onClick={() => handleDeactivate(c.id, c.name)}
                             title="Deactivate Customer"
-                            className="p-1.5 rounded-lg text-red-500 hover:bg-red-50 transition"
+                            className="p-1.5 rounded-lg text-[#E45B68] hover:bg-[#FDF0F1] transition"
                           >
                             <UserX className="w-4 h-4" />
                           </button>

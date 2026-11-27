@@ -1,16 +1,6 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import {
-  BookOpenText,
-  Search,
-  Wallet,
-  Clock,
-  Printer,
-  SlidersHorizontal,
-  ShieldCheck,
-  AlertOctagon,
-  RotateCcw
-} from 'lucide-react';
+import { Wallet, SlidersHorizontal } from 'lucide-react';
 import api from '../services/api';
 import StatusBadge from '../components/common/StatusBadge';
 import PrintPDFButton from '../components/common/PrintPDFButton';
@@ -27,11 +17,9 @@ const CollectionLedger = () => {
   const [ledgerData, setLedgerData] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Receipt Modal
   const [selectedReceipt, setSelectedReceipt] = useState(null);
   const [receiptModalOpen, setReceiptModalOpen] = useState(false);
 
-  // Adjustment Modal
   const [adjModalOpen, setAdjModalOpen] = useState(false);
   const [adjType, setAdjType] = useState('WAIVER');
   const [adjAmount, setAdjAmount] = useState('');
@@ -42,7 +30,6 @@ const CollectionLedger = () => {
   const navigate = useNavigate();
   const { isAdmin, canPerformTransactions } = useAuth();
 
-  // Load active accounts
   useEffect(() => {
     const loadAccounts = async () => {
       try {
@@ -60,7 +47,6 @@ const CollectionLedger = () => {
     loadAccounts();
   }, []);
 
-  // Fetch ledger when selectedAccountId changes
   useEffect(() => {
     if (selectedAccountId) {
       const fetchLedger = async () => {
@@ -102,13 +88,12 @@ const CollectionLedger = () => {
       const res = await api.post(`/accounts/${selectedAccountId}/adjustments`, {
         type: adjType,
         amount: parseFloat(adjAmount),
-        reason: adjReason
+        reason: adjReason,
       });
       if (res.data.success) {
         setAdjMessage('Adjustment recorded with audit trail!');
         setAdjAmount('');
         setAdjReason('');
-        // Refresh ledger
         const refreshRes = await api.get(`/accounts/${selectedAccountId}/ledger`);
         if (refreshRes.data.success) {
           setLedgerData(refreshRes.data);
@@ -125,78 +110,98 @@ const CollectionLedger = () => {
   const { account, ledger } = ledgerData || {};
 
   return (
-    <div id="printable-area" className="space-y-6">
+    <div id="printable-area" className="space-y-4 sm:space-y-6">
       {/* Header and Account Selector */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-stone-200 shadow-card">
-        <div>
-          <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Accounting Ledger</span>
-          <h1 className="text-2xl font-black text-slate-900 tracking-tight">Collection Ledger & FIFO Breakdown</h1>
-          <p className="text-xs text-slate-500 mt-0.5">Week-by-week scheduled repayments, arrears tracking & payment allocations</p>
-        </div>
+      <div className="bg-white p-4 sm:p-6 rounded-2xl border border-[#E2E8F4] shadow-card relative overflow-hidden space-y-4">
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#2446A8] to-[#13A89E]" />
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div className="min-w-0">
+            <span className="text-[11px] font-bold text-[#2446A8] uppercase tracking-wider">
+              Accounting Ledger
+            </span>
+            <h1 className="text-xl sm:text-2xl font-black text-[#17233C] tracking-tight">
+              Collection Ledger & FIFO Breakdown
+            </h1>
+            <p className="text-xs text-[#718096] mt-0.5">
+              Week-by-week scheduled repayments, arrears tracking & payment allocations
+            </p>
+          </div>
 
-        {/* Account Selector */}
-        <div className="flex items-center gap-2 self-start sm:self-auto">
-          <select
-            value={selectedAccountId}
-            onChange={(e) => setSelectedAccountId(e.target.value)}
-            className="px-3.5 py-2.5 text-xs font-bold rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#BFE23A] bg-stone-50 text-slate-900"
-          >
-            {accounts.map((a) => (
-              <option key={a.id} value={a.id}>
-                {a.accountNumber} - {a.customer?.name}
-              </option>
-            ))}
-          </select>
-          {canPerformTransactions && (
-            <button
-              onClick={() => navigate(`/collections?accountId=${selectedAccountId}`)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs font-black bg-[#BFE23A] hover:bg-[#aed12b] text-slate-950 shadow-xs transition"
+          <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-2 w-full lg:w-auto">
+            <select
+              value={selectedAccountId}
+              onChange={(e) => setSelectedAccountId(e.target.value)}
+              className="w-full sm:w-auto sm:max-w-xs min-h-[42px] px-3.5 py-2 text-xs font-bold rounded-xl border border-[#DCE4F2] focus:outline-none focus:ring-2 focus:ring-[#2446A8] bg-[#F5F7FC] text-[#17233C]"
             >
-              <Wallet className="w-4 h-4" /> Collect
-            </button>
-          )}
-          {isAdmin && (
-            <button
-              onClick={() => setAdjModalOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-bold bg-stone-100 hover:bg-stone-200 text-slate-700 transition"
-              title="Record Waiver / Adjustment"
-            >
-              <SlidersHorizontal className="w-4 h-4" /> Adjustment
-            </button>
-          )}
-          <PrintPDFButton targetId="printable-area" title={`TRIDIN FINANCE â€“ Collection Ledger ${account?.accountNumber || ''}`} compact />
+              {accounts.map((a) => (
+                <option key={a.id} value={a.id}>
+                  {a.accountNumber} - {a.customer?.name}
+                </option>
+              ))}
+            </select>
+            <div className="flex flex-wrap items-center gap-2">
+              {canPerformTransactions && (
+                <button
+                  type="button"
+                  onClick={() => navigate(`/collections?accountId=${selectedAccountId}`)}
+                  className="inline-flex items-center justify-center gap-1.5 min-h-[40px] px-4 py-2 rounded-xl text-xs font-extrabold btn-teal flex-1 sm:flex-none"
+                >
+                  <Wallet className="w-4 h-4 shrink-0" />
+                  <span>Record Collection</span>
+                </button>
+              )}
+              {isAdmin && (
+                <button
+                  type="button"
+                  onClick={() => setAdjModalOpen(true)}
+                  className="inline-flex items-center justify-center gap-1.5 min-h-[40px] px-3.5 py-2 rounded-xl text-xs font-bold bg-[#EEF2FC] hover:bg-[#DCE5FB] text-[#2446A8] border border-[#2446A8]/20 transition"
+                  title="Record Ledger Adjustment / Waiver"
+                >
+                  <SlidersHorizontal className="w-4 h-4 shrink-0" />
+                  <span>Adjustment Type</span>
+                </button>
+              )}
+              <PrintPDFButton
+                targetId="printable-area"
+                title={`TRIDIN FINANCE – Collection Ledger ${account?.accountNumber || ''}`}
+                compact
+              />
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Account Info Pill */}
       {account && (
-        <div className="bg-white rounded-2xl border border-stone-200 shadow-card p-5 grid grid-cols-2 sm:grid-cols-5 gap-4 text-xs">
+        <div className="bg-white rounded-2xl border border-[#E2E8F4] shadow-card p-4 sm:p-5 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4 text-xs">
           <div>
-            <span className="text-slate-400 font-bold block uppercase text-[10px]">Customer:</span>
-            <span className="font-extrabold text-slate-900 text-sm block">{account.customerName}</span>
-            <span className="font-mono text-slate-500 text-[10px]">{account.customerCode}</span>
+            <span className="text-[#718096] font-bold block uppercase text-[10px]">Customer:</span>
+            <span className="font-extrabold text-[#17233C] text-sm block truncate">
+              {account.customerName}
+            </span>
+            <span className="font-code text-[#718096] text-[10px]">{account.customerCode}</span>
           </div>
           <div>
-            <span className="text-slate-400 font-bold block uppercase text-[10px]">Agreed Repayment:</span>
-            <span className="font-mono font-black text-slate-900 text-sm block">
+            <span className="text-[#718096] font-bold block uppercase text-[10px]">Agreed Repayment:</span>
+            <span className="font-num font-extrabold text-[#2446A8] text-sm block">
               ₹{account.agreedRepayment?.toLocaleString('en-IN')}
             </span>
-            <span className="text-slate-400 text-[10px]">{account.totalWeeks} Weeks Schedule</span>
+            <span className="text-[#718096] text-[10px]">{account.totalWeeks} Weeks Schedule</span>
           </div>
           <div>
-            <span className="text-slate-400 font-bold block uppercase text-[10px]">Disbursed Capital:</span>
-            <span className="font-mono font-bold text-slate-800 text-sm block">
+            <span className="text-[#718096] font-bold block uppercase text-[10px]">Disbursed Capital:</span>
+            <span className="font-num font-bold text-[#17233C] text-sm block">
               ₹{account.actualDisbursed?.toLocaleString('en-IN')}
             </span>
           </div>
           <div>
-            <span className="text-slate-400 font-bold block uppercase text-[10px]">Gross Difference:</span>
-            <span className="font-mono font-bold text-purple-700 text-sm block">
+            <span className="text-[#718096] font-bold block uppercase text-[10px]">Gross Difference:</span>
+            <span className="font-num font-bold text-[#6E4BC4] text-sm block">
               ₹{account.grossDifference?.toLocaleString('en-IN')}
             </span>
           </div>
-          <div>
-            <span className="text-slate-400 font-bold block uppercase text-[10px]">Contract Status:</span>
+          <div className="xs:col-span-2 sm:col-span-1">
+            <span className="text-[#718096] font-bold block uppercase text-[10px]">Contract Status:</span>
             <div className="mt-1">
               <StatusBadge status={account.status} />
             </div>
@@ -204,11 +209,85 @@ const CollectionLedger = () => {
         </div>
       )}
 
-      {/* Ledger Table */}
-      <div className="bg-white rounded-2xl border border-stone-200 shadow-card overflow-hidden">
-        <div className="overflow-x-auto">
+      {/* Ledger Mobile Cards & Desktop Table */}
+      <div className="bg-white rounded-2xl border border-[#E2E8F4] shadow-card overflow-hidden">
+        {/* Mobile View */}
+        <div className="md:hidden print:hidden divide-y divide-[#E2E8F4]">
+          {loading ? (
+            <div className="py-12 px-4 text-center text-xs text-[#718096]">
+              <div className="inline-block w-6 h-6 border-2 border-[#E2E8F4] border-t-[#2446A8] rounded-full animate-spin mr-2 align-middle" />
+              Loading ledger data...
+            </div>
+          ) : !ledger || ledger.length === 0 ? (
+            <div className="py-12 px-4 text-center text-xs text-[#718096]">No records found</div>
+          ) : (
+            ledger.map((row) => (
+              <div key={row.id} className="p-4 space-y-2.5 hover:bg-[#F5F7FC]/60">
+                <div className="flex items-center justify-between gap-2">
+                  <div>
+                    <span className="font-bold text-sm text-[#17233C]">Week {row.weekNumber}</span>
+                    <span className="text-xs text-[#718096] font-num ml-2">
+                      {new Date(row.dueDate).toLocaleDateString('en-IN', {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric',
+                      })}
+                    </span>
+                  </div>
+                  <StatusBadge status={row.status} />
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 bg-[#F5F7FC] border border-[#E2E8F4] rounded-xl p-3 text-xs">
+                  <div>
+                    <span className="text-[10px] text-[#718096] uppercase block">Scheduled Amount</span>
+                    <span className="font-num font-bold text-[#17233C]">
+                      ₹{row.scheduledAmount?.toLocaleString('en-IN')}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-[#718096] uppercase block">Paid Amount</span>
+                    <span className="font-num font-bold text-[#0D857D]">
+                      ₹{row.paidAmount?.toLocaleString('en-IN')}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-[#718096] uppercase block">Arrears (₹)</span>
+                    <span className={`font-num font-bold ${row.arrears > 0 ? 'text-[#C93D4B]' : 'text-[#718096]'}`}>
+                      ₹{(row.arrears || 0).toLocaleString('en-IN')}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-[#718096] uppercase block">Remaining Balance (₹)</span>
+                    <span className="font-num font-extrabold text-[#17233C]">
+                      ₹{row.outstandingBalance?.toLocaleString('en-IN')}
+                    </span>
+                  </div>
+                </div>
+
+                {row.allocations && row.allocations.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {row.allocations.map((alloc, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => viewReceipt(alloc.payment?.receiptNumber)}
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-code bg-[#EEF2FC] hover:bg-[#DCE5FB] text-[#2446A8] border border-[#2446A8]/20 transition"
+                      >
+                        <span>{alloc.payment?.receiptNumber}</span>
+                        <span className="font-bold font-num">₹{Number(alloc.allocatedAmount)}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* Desktop & Print Table */}
+        <div className="hidden md:block print:block overflow-x-auto">
           <table className="w-full text-xs text-left">
-            <thead className="bg-[#FAF2E9]/70 border-b border-stone-200 text-slate-700 font-bold uppercase tracking-wider text-[10px]">
+            <thead className="bg-[#F5F7FC] border-b border-[#E2E8F4] text-[#718096] font-bold uppercase tracking-wider text-[10px]">
               <tr>
                 <th className="py-3 px-4">Week #</th>
                 <th className="py-3 px-4">Due Date</th>
@@ -220,49 +299,49 @@ const CollectionLedger = () => {
                 <th className="py-3 px-4">Allocated Receipts (FIFO)</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-stone-100">
+            <tbody className="divide-y divide-[#E2E8F4]">
               {loading ? (
                 <tr>
-                  <td colSpan={8} className="py-12 text-center text-slate-400">
-                    <div className="inline-block w-6 h-6 border-2 border-slate-900 border-t-[#BFE23A] rounded-full animate-spin mr-2" />
-                    Calculating weekly ledger balances...
+                  <td colSpan={8} className="py-12 text-center text-[#718096]">
+                    <div className="inline-block w-6 h-6 border-2 border-[#E2E8F4] border-t-[#2446A8] rounded-full animate-spin mr-2 align-middle" />
+                    Loading ledger data...
                   </td>
                 </tr>
               ) : !ledger || ledger.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="py-12 text-center text-slate-400">
-                    No ledger entries found.
+                  <td colSpan={8} className="py-12 text-center text-[#718096]">
+                    No records found
                   </td>
                 </tr>
               ) : (
                 ledger.map((row) => (
-                  <tr key={row.id} className="hover:bg-[#FAF2E9]/20 transition">
-                    <td className="py-3 px-4 font-bold text-slate-800">
+                  <tr key={row.id} className="hover:bg-[#F5F7FC]/70 transition">
+                    <td className="py-3 px-4 font-bold text-[#17233C] whitespace-nowrap">
                       Week {row.weekNumber}
                     </td>
-                    <td className="py-3 px-4 text-slate-600 font-mono">
+                    <td className="py-3 px-4 text-[#718096] font-num whitespace-nowrap">
                       {new Date(row.dueDate).toLocaleDateString('en-IN', {
                         day: 'numeric',
                         month: 'short',
-                        year: 'numeric'
+                        year: 'numeric',
                       })}
                     </td>
-                    <td className="py-3 px-4 text-right font-mono font-medium text-slate-700">
+                    <td className="py-3 px-4 text-right font-num font-medium text-[#17233C]">
                       ₹{row.scheduledAmount?.toLocaleString('en-IN')}
                     </td>
-                    <td className="py-3 px-4 text-right font-mono font-bold text-emerald-700">
+                    <td className="py-3 px-4 text-right font-num font-bold text-[#0D857D]">
                       ₹{row.paidAmount?.toLocaleString('en-IN')}
                     </td>
-                    <td className="py-3 px-4 text-right font-mono">
+                    <td className="py-3 px-4 text-right font-num">
                       {row.arrears > 0 ? (
-                        <span className="font-bold text-[#E10600]">
+                        <span className="font-bold text-[#C93D4B]">
                           ₹{row.arrears?.toLocaleString('en-IN')}
                         </span>
                       ) : (
-                        <span className="text-slate-400">₹0</span>
+                        <span className="text-[#718096]">₹0</span>
                       )}
                     </td>
-                    <td className="py-3 px-4 text-right font-mono font-extrabold text-slate-900">
+                    <td className="py-3 px-4 text-right font-num font-extrabold text-[#17233C]">
                       ₹{row.outstandingBalance?.toLocaleString('en-IN')}
                     </td>
                     <td className="py-3 px-4 text-center">
@@ -274,16 +353,17 @@ const CollectionLedger = () => {
                           {row.allocations.map((alloc, idx) => (
                             <button
                               key={idx}
+                              type="button"
                               onClick={() => viewReceipt(alloc.payment?.receiptNumber)}
-                              className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 transition"
+                              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-code bg-[#EEF2FC] hover:bg-[#DCE5FB] text-[#2446A8] border border-[#2446A8]/20 transition"
                             >
                               <span>{alloc.payment?.receiptNumber}</span>
-                              <span className="font-bold">₹{Number(alloc.allocatedAmount)}</span>
+                              <span className="font-bold font-num">₹{Number(alloc.allocatedAmount)}</span>
                             </button>
                           ))}
                         </div>
                       ) : (
-                        <span className="text-slate-400 text-[10px]">Unpaid</span>
+                        <span className="text-[#718096] text-[10px]">Unpaid</span>
                       )}
                     </td>
                   </tr>
@@ -294,7 +374,6 @@ const CollectionLedger = () => {
         </div>
       </div>
 
-      {/* Printable Receipt Modal */}
       <ReceiptModal
         isOpen={receiptModalOpen}
         onClose={() => setReceiptModalOpen(false)}
@@ -304,22 +383,22 @@ const CollectionLedger = () => {
       {/* Adjustment Modal */}
       <Modal isOpen={adjModalOpen} onClose={() => setAdjModalOpen(false)} title="Record Ledger Adjustment / Waiver">
         <form onSubmit={handleRecordAdjustment} className="space-y-4">
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-[#718096]">
             Record a formal penalty, waiver, discount, or correction with strict audit history tracking.
           </p>
 
           {adjMessage && (
-            <div className="p-3 rounded-xl bg-stone-100 text-xs font-semibold text-slate-800">
+            <div className="p-3 rounded-xl bg-[#EEF2FC] border border-[#2446A8]/20 text-xs font-semibold text-[#2446A8]">
               {adjMessage}
             </div>
           )}
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Adjustment Type</label>
+            <label className="block text-xs font-bold text-[#17233C] uppercase mb-1">Adjustment Type</label>
             <select
               value={adjType}
               onChange={(e) => setAdjType(e.target.value)}
-              className="w-full px-3 py-2 text-xs rounded-xl border border-stone-300"
+              className="w-full min-h-[42px] px-3 py-2 text-xs rounded-xl border border-[#DCE4F2] bg-[#F5F7FC] text-[#17233C]"
             >
               <option value="WAIVER">Fee Waiver</option>
               <option value="PENALTY">Late Penalty</option>
@@ -329,7 +408,7 @@ const CollectionLedger = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Amount (₹)</label>
+            <label className="block text-xs font-bold text-[#17233C] uppercase mb-1">Amount (₹)</label>
             <input
               type="number"
               min="1"
@@ -338,34 +417,34 @@ const CollectionLedger = () => {
               value={adjAmount}
               onChange={(e) => setAdjAmount(e.target.value)}
               placeholder="e.g. 500"
-              className="w-full px-3 py-2 text-xs font-mono font-bold rounded-xl border border-stone-300"
+              className="w-full min-h-[42px] px-3 py-2 text-xs font-num font-bold rounded-xl border border-[#DCE4F2] bg-[#F5F7FC] text-[#17233C]"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Audit Reason *</label>
+            <label className="block text-xs font-bold text-[#17233C] uppercase mb-1">Audit Reason *</label>
             <textarea
               required
               rows={2}
               value={adjReason}
               onChange={(e) => setAdjReason(e.target.value)}
               placeholder="Specify justification for audit records..."
-              className="w-full px-3 py-2 text-xs rounded-xl border border-stone-300"
+              className="w-full px-3 py-2 text-xs rounded-xl border border-[#DCE4F2] bg-[#F5F7FC] text-[#17233C]"
             />
           </div>
 
-          <div className="pt-2 flex justify-end gap-2">
+          <div className="pt-2 flex flex-col-reverse xs:flex-row justify-end gap-2">
             <button
               type="button"
               onClick={() => setAdjModalOpen(false)}
-              className="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-stone-100 rounded-xl"
+              className="min-h-[40px] px-4 py-2 text-xs font-bold text-[#718096] hover:bg-[#F5F7FC] rounded-xl"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={adjLoading}
-              className="px-4 py-2 text-xs font-bold bg-[#BFE23A] text-slate-900 rounded-xl hover:bg-[#aed12b]"
+              className="min-h-[40px] px-4 py-2 text-xs font-bold btn-teal rounded-xl"
             >
               {adjLoading ? 'Saving...' : 'Post Adjustment'}
             </button>

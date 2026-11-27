@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { LanguageProvider } from './context/LanguageContext';
 import MainLayout from './layouts/MainLayout';
 
 // Pages
@@ -21,12 +22,18 @@ import Reports from './pages/Reports';
 import StaffManagement from './pages/StaffManagement';
 import Settings from './pages/Settings';
 import AuditLogs from './pages/AuditLogs';
+import RouteManagement from './pages/RouteManagement';
+import Expenses from './pages/Expenses';
+import Investments from './pages/Investments';
+import CashFlow from './pages/CashFlow';
+import StaffSalary from './pages/StaffSalary';
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
+    <LanguageProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
           {/* Public login route */}
           <Route path="/login" element={<Login />} />
 
@@ -51,13 +58,19 @@ function App() {
             <Route path="staff" element={<StaffManagement />} />
             <Route path="settings" element={<Settings />} />
             <Route path="audit-logs" element={<AuditLogs />} />
+            <Route path="routes" element={<RouteManagement />} />
+            <Route path="expenses" element={<Expenses />} />
+            <Route path="investments" element={<Investments />} />
+            <Route path="cashflow" element={<CashFlow />} />
+            <Route path="salary" element={<StaffSalary />} />
           </Route>
 
           {/* Catch-all redirect */}
           <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </LanguageProvider>
   );
 }
 

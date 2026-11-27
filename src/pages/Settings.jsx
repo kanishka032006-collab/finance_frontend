@@ -238,7 +238,7 @@ const Settings = () => {
                     onClick={() => handlePaymentMethodToggle(method)}
                     className={`p-3 rounded-xl border text-xs font-bold transition flex items-center justify-between ${
                       isEnabled
-                        ? 'bg-[#BFE23A]/20 border-[#BFE23A] text-slate-900'
+                        ? 'bg-[#789486]/20 border-[#789486] text-slate-900'
                         : 'bg-stone-50 border-stone-200 text-slate-400 line-through'
                     }`}
                   >
@@ -256,7 +256,7 @@ const Settings = () => {
           <button
             type="submit"
             disabled={saving}
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black bg-[#BFE23A] hover:bg-[#aed12b] text-slate-950 shadow-sm transition"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black bg-[#789486] hover:bg-[#5E786B] text-white shadow-sm transition"
           >
             <Save className="w-4 h-4" />
             {saving ? 'Saving...' : 'Save Settings'}
@@ -283,7 +283,7 @@ const Settings = () => {
             disabled={backupLoading}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-black bg-slate-900 hover:bg-slate-800 text-white shadow-sm transition"
           >
-            <Download className="w-4 h-4 text-[#BFE23A]" />
+            <Download className="w-4 h-4 text-[#789486]" />
             {backupLoading ? 'Generating PDF...' : 'Download Complete System Database Snapshot'}
           </button>
         </div>

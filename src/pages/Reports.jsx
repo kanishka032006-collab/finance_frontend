@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
   BarChart3,
@@ -103,12 +103,12 @@ const Reports = () => {
         <div className="flex items-center gap-2 self-start sm:self-auto">
           <button
             onClick={handleExportCSV}
-            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-black bg-[#BFE23A] hover:bg-[#aed12b] text-slate-950 shadow-xs transition"
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-black bg-[#789486] hover:bg-[#5E786B] text-white shadow-xs transition"
           >
             <Download className="w-4 h-4 text-slate-950" />
             Export CSV / Excel
           </button>
-          <PrintPDFButton targetId="printable-area" title={`TRIDIN FINANCE â€“ ${reportTabs.find(t => t.id === activeTab)?.name || 'Report'}`} />
+          <PrintPDFButton targetId="printable-area" title={`TRIDIN FINANCE – ${reportTabs.find(t => t.id === activeTab)?.name || 'Report'}`} />
         </div>
       </div>
 
@@ -164,7 +164,7 @@ const Reports = () => {
       <div className="bg-white rounded-2xl border border-stone-200 shadow-card overflow-hidden">
         {loading ? (
           <div className="py-16 text-center text-xs text-slate-400">
-            <div className="inline-block w-6 h-6 border-2 border-slate-900 border-t-[#BFE23A] rounded-full animate-spin mr-2" />
+            <div className="inline-block w-6 h-6 border-2 border-slate-900 border-t-[#789486] rounded-full animate-spin mr-2" />
             Generating financial analytics report...
           </div>
         ) : (
@@ -172,7 +172,7 @@ const Reports = () => {
             {/* Daily Collections */}
             {activeTab === 'daily' && (
               <table className="w-full text-xs text-left">
-                <thead className="bg-[#FAF2E9]/70 border-b border-stone-200 text-slate-700 font-bold uppercase tracking-wider text-[10px]">
+                <thead className="bg-[#F8F8F5]/70 border-b border-stone-200 text-slate-700 font-bold uppercase tracking-wider text-[10px]">
                   <tr>
                     <th className="py-3 px-4">Receipt #</th>
                     <th className="py-3 px-4">Date</th>
@@ -180,7 +180,7 @@ const Reports = () => {
                     <th className="py-3 px-4">Account #</th>
                     <th className="py-3 px-4">Collector</th>
                     <th className="py-3 px-4">Method</th>
-                    <th className="py-3 px-4 text-right">Amount (₹)</th>
+                    <th className="py-3 px-4 text-right">Amount (?)</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-stone-100">
@@ -195,7 +195,7 @@ const Reports = () => {
                       <td className="py-2.5 px-4 text-slate-700">{r.collector?.name}</td>
                       <td className="py-2.5 px-4 font-semibold text-slate-700">{r.paymentMethod}</td>
                       <td className="py-2.5 px-4 text-right font-mono font-bold text-emerald-700">
-                        ₹{Number(r.amount).toLocaleString('en-IN')}
+                        ?{Number(r.amount).toLocaleString('en-IN')}
                       </td>
                     </tr>
                   ))}
@@ -204,8 +204,8 @@ const Reports = () => {
                     <td colSpan={6} className="py-3 px-4 text-right">
                       Total Collections ({reportData?.totalTransactions || 0} transactions):
                     </td>
-                    <td className="py-3 px-4 text-right font-mono font-black text-[#BFE23A]">
-                      ₹{reportData?.totalCollected?.toLocaleString('en-IN')}
+                    <td className="py-3 px-4 text-right font-mono font-black text-[#789486]">
+                      ?{reportData?.totalCollected?.toLocaleString('en-IN')}
                     </td>
                   </tr>
                 </tbody>
@@ -215,11 +215,11 @@ const Reports = () => {
             {/* Weekly Collections */}
             {activeTab === 'weekly' && (
               <table className="w-full text-xs text-left">
-                <thead className="bg-[#FAF2E9]/70 border-b border-stone-200 text-slate-700 font-bold uppercase tracking-wider text-[10px]">
+                <thead className="bg-[#F8F8F5]/70 border-b border-stone-200 text-slate-700 font-bold uppercase tracking-wider text-[10px]">
                   <tr>
                     <th className="py-3 px-4">Week Period</th>
                     <th className="py-3 px-4 text-center">Transactions Count</th>
-                    <th className="py-3 px-4 text-right">Total Collections (₹)</th>
+                    <th className="py-3 px-4 text-right">Total Collections (?)</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-stone-100">
@@ -228,7 +228,7 @@ const Reports = () => {
                       <td className="py-3 px-4 font-bold text-slate-900">{w.week}</td>
                       <td className="py-3 px-4 text-center font-bold text-slate-600">{w.count}</td>
                       <td className="py-3 px-4 text-right font-mono font-bold text-emerald-700">
-                        ₹{w.totalAmount?.toLocaleString('en-IN')}
+                        ?{w.totalAmount?.toLocaleString('en-IN')}
                       </td>
                     </tr>
                   ))}
@@ -239,11 +239,11 @@ const Reports = () => {
             {/* Monthly Collections */}
             {activeTab === 'monthly' && (
               <table className="w-full text-xs text-left">
-                <thead className="bg-[#FAF2E9]/70 border-b border-stone-200 text-slate-700 font-bold uppercase tracking-wider text-[10px]">
+                <thead className="bg-[#F8F8F5]/70 border-b border-stone-200 text-slate-700 font-bold uppercase tracking-wider text-[10px]">
                   <tr>
                     <th className="py-3 px-4">Month</th>
                     <th className="py-3 px-4 text-center">Total Collections Count</th>
-                    <th className="py-3 px-4 text-right">Collected Revenue (₹)</th>
+                    <th className="py-3 px-4 text-right">Collected Revenue (?)</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-stone-100">
@@ -252,7 +252,7 @@ const Reports = () => {
                       <td className="py-3 px-4 font-bold text-slate-900">{m.month}</td>
                       <td className="py-3 px-4 text-center font-bold text-slate-600">{m.count}</td>
                       <td className="py-3 px-4 text-right font-mono font-black text-emerald-700">
-                        ₹{m.totalAmount?.toLocaleString('en-IN')}
+                        ?{m.totalAmount?.toLocaleString('en-IN')}
                       </td>
                     </tr>
                   ))}
@@ -263,7 +263,7 @@ const Reports = () => {
             {/* Customer Collections */}
             {activeTab === 'customer' && (
               <table className="w-full text-xs text-left">
-                <thead className="bg-[#FAF2E9]/70 border-b border-stone-200 text-slate-700 font-bold uppercase tracking-wider text-[10px]">
+                <thead className="bg-[#F8F8F5]/70 border-b border-stone-200 text-slate-700 font-bold uppercase tracking-wider text-[10px]">
                   <tr>
                     <th className="py-3 px-4">Customer</th>
                     <th className="py-3 px-4">KYC</th>
@@ -283,10 +283,10 @@ const Reports = () => {
                       </td>
                       <td className="py-3 px-4"><StatusBadge status={c.kycStatus} /></td>
                       <td className="py-3 px-4 text-center font-bold">{c.totalAccounts}</td>
-                      <td className="py-3 px-4 text-right font-mono">₹{c.totalDisbursed?.toLocaleString('en-IN')}</td>
-                      <td className="py-3 px-4 text-right font-mono font-bold">₹{c.totalAgreed?.toLocaleString('en-IN')}</td>
-                      <td className="py-3 px-4 text-right font-mono text-emerald-700 font-bold">₹{c.totalCollected?.toLocaleString('en-IN')}</td>
-                      <td className="py-3 px-4 text-right font-mono text-amber-700 font-bold">₹{c.outstanding?.toLocaleString('en-IN')}</td>
+                      <td className="py-3 px-4 text-right font-mono">?{c.totalDisbursed?.toLocaleString('en-IN')}</td>
+                      <td className="py-3 px-4 text-right font-mono font-bold">?{c.totalAgreed?.toLocaleString('en-IN')}</td>
+                      <td className="py-3 px-4 text-right font-mono text-emerald-700 font-bold">?{c.totalCollected?.toLocaleString('en-IN')}</td>
+                      <td className="py-3 px-4 text-right font-mono text-amber-700 font-bold">?{c.outstanding?.toLocaleString('en-IN')}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -296,13 +296,13 @@ const Reports = () => {
             {/* Collector Performance */}
             {activeTab === 'collector' && (
               <table className="w-full text-xs text-left">
-                <thead className="bg-[#FAF2E9]/70 border-b border-stone-200 text-slate-700 font-bold uppercase tracking-wider text-[10px]">
+                <thead className="bg-[#F8F8F5]/70 border-b border-stone-200 text-slate-700 font-bold uppercase tracking-wider text-[10px]">
                   <tr>
                     <th className="py-3 px-4">Collector Staff Name</th>
                     <th className="py-3 px-4">Email</th>
                     <th className="py-3 px-4">Role</th>
                     <th className="py-3 px-4 text-center">Receipts Posted</th>
-                    <th className="py-3 px-4 text-right">Total Collections (₹)</th>
+                    <th className="py-3 px-4 text-right">Total Collections (?)</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-stone-100">
@@ -313,7 +313,7 @@ const Reports = () => {
                       <td className="py-3 px-4"><StatusBadge status={col.role} /></td>
                       <td className="py-3 px-4 text-center font-bold text-slate-700">{col.transactionsCount}</td>
                       <td className="py-3 px-4 text-right font-mono font-black text-emerald-700">
-                        ₹{col.totalCollected?.toLocaleString('en-IN')}
+                        ?{col.totalCollected?.toLocaleString('en-IN')}
                       </td>
                     </tr>
                   ))}
@@ -324,7 +324,7 @@ const Reports = () => {
             {/* Outstanding Accounts */}
             {activeTab === 'outstanding' && (
               <table className="w-full text-xs text-left">
-                <thead className="bg-[#FAF2E9]/70 border-b border-stone-200 text-slate-700 font-bold uppercase tracking-wider text-[10px]">
+                <thead className="bg-[#F8F8F5]/70 border-b border-stone-200 text-slate-700 font-bold uppercase tracking-wider text-[10px]">
                   <tr>
                     <th className="py-3 px-4">Account #</th>
                     <th className="py-3 px-4">Customer</th>
@@ -343,14 +343,14 @@ const Reports = () => {
                         <span className="font-bold text-slate-900 block">{acc.customerName}</span>
                         <span className="font-mono text-[10px] text-slate-400">{acc.customerCode}</span>
                       </td>
-                      <td className="py-3 px-4 text-right font-mono">₹{acc.agreedRepayment?.toLocaleString('en-IN')}</td>
-                      <td className="py-3 px-4 text-right font-mono text-emerald-700">₹{acc.totalPaid?.toLocaleString('en-IN')}</td>
-                      <td className="py-3 px-4 text-right font-mono font-bold text-amber-700">₹{acc.outstanding?.toLocaleString('en-IN')}</td>
+                      <td className="py-3 px-4 text-right font-mono">?{acc.agreedRepayment?.toLocaleString('en-IN')}</td>
+                      <td className="py-3 px-4 text-right font-mono text-emerald-700">?{acc.totalPaid?.toLocaleString('en-IN')}</td>
+                      <td className="py-3 px-4 text-right font-mono font-bold text-amber-700">?{acc.outstanding?.toLocaleString('en-IN')}</td>
                       <td className="py-3 px-4 text-right font-mono">
                         {acc.overdueAmount > 0 ? (
-                          <span className="font-bold text-[#E10600]">₹{acc.overdueAmount?.toLocaleString('en-IN')}</span>
+                          <span className="font-bold text-[#E10600]">?{acc.overdueAmount?.toLocaleString('en-IN')}</span>
                         ) : (
-                          <span className="text-slate-400">₹0</span>
+                          <span className="text-slate-400">?0</span>
                         )}
                       </td>
                       <td className="py-3 px-4 text-center"><StatusBadge status={acc.status} /></td>
@@ -382,10 +382,10 @@ const Reports = () => {
                         <span className="font-mono text-[10px] text-slate-400">{o.customerCode}</span>
                       </td>
                       <td className="py-3 px-4 font-mono text-slate-700">{o.mobile}</td>
-                      <td className="py-3 px-4 text-right font-mono">₹{o.agreedRepayment?.toLocaleString('en-IN')}</td>
-                      <td className="py-3 px-4 text-right font-mono font-bold text-amber-700">₹{o.outstanding?.toLocaleString('en-IN')}</td>
+                      <td className="py-3 px-4 text-right font-mono">?{o.agreedRepayment?.toLocaleString('en-IN')}</td>
+                      <td className="py-3 px-4 text-right font-mono font-bold text-amber-700">?{o.outstanding?.toLocaleString('en-IN')}</td>
                       <td className="py-3 px-4 text-right font-mono font-black text-[#E10600]">
-                        ₹{o.overdueAmount?.toLocaleString('en-IN')}
+                        ?{o.overdueAmount?.toLocaleString('en-IN')}
                       </td>
                     </tr>
                   ))}
@@ -396,15 +396,15 @@ const Reports = () => {
             {/* Disbursement Register */}
             {activeTab === 'disbursement' && (
               <table className="w-full text-xs text-left">
-                <thead className="bg-[#FAF2E9]/70 border-b border-stone-200 text-slate-700 font-bold uppercase tracking-wider text-[10px]">
+                <thead className="bg-[#F8F8F5]/70 border-b border-stone-200 text-slate-700 font-bold uppercase tracking-wider text-[10px]">
                   <tr>
                     <th className="py-3 px-4">Disbursed Date</th>
                     <th className="py-3 px-4">Account #</th>
                     <th className="py-3 px-4">Customer</th>
-                    <th className="py-3 px-4 text-right font-bold text-slate-900">Disbursed (₹)</th>
-                    <th className="py-3 px-4 text-right">Agreed (₹)</th>
-                    <th className="py-3 px-4 text-right">Gross Diff (₹)</th>
-                    <th className="py-3 px-4 text-right">Weekly (₹)</th>
+                    <th className="py-3 px-4 text-right font-bold text-slate-900">Disbursed (?)</th>
+                    <th className="py-3 px-4 text-right">Agreed (?)</th>
+                    <th className="py-3 px-4 text-right">Gross Diff (?)</th>
+                    <th className="py-3 px-4 text-right">Weekly (?)</th>
                     <th className="py-3 px-4 text-center">Weeks</th>
                   </tr>
                 </thead>
@@ -417,13 +417,13 @@ const Reports = () => {
                       <td className="py-3 px-4 font-mono font-bold text-slate-900">{d.accountNumber}</td>
                       <td className="py-3 px-4 font-bold text-slate-900">{d.customerName}</td>
                       <td className="py-3 px-4 text-right font-mono font-bold text-slate-900">
-                        ₹{d.disbursedAmount?.toLocaleString('en-IN')}
+                        ?{d.disbursedAmount?.toLocaleString('en-IN')}
                       </td>
-                      <td className="py-3 px-4 text-right font-mono">₹{d.agreedRepayment?.toLocaleString('en-IN')}</td>
+                      <td className="py-3 px-4 text-right font-mono">?{d.agreedRepayment?.toLocaleString('en-IN')}</td>
                       <td className="py-3 px-4 text-right font-mono font-semibold text-purple-700">
-                        ₹{d.grossDifference?.toLocaleString('en-IN')}
+                        ?{d.grossDifference?.toLocaleString('en-IN')}
                       </td>
-                      <td className="py-3 px-4 text-right font-mono">₹{d.weeklyInstalment?.toLocaleString('en-IN')}</td>
+                      <td className="py-3 px-4 text-right font-mono">?{d.weeklyInstalment?.toLocaleString('en-IN')}</td>
                       <td className="py-3 px-4 text-center font-bold text-slate-700">{d.totalWeeks}</td>
                     </tr>
                   ))}
@@ -438,10 +438,10 @@ const Reports = () => {
                   <tr>
                     <th className="py-3 px-4">Account #</th>
                     <th className="py-3 px-4">Customer</th>
-                    <th className="py-3 px-4 text-right">Disbursed (₹)</th>
-                    <th className="py-3 px-4 text-right">Agreed Repayment (₹)</th>
-                    <th className="py-3 px-4 text-right">Gross Difference (₹)</th>
-                    <th className="py-3 px-4 text-right">Total Paid (₹)</th>
+                    <th className="py-3 px-4 text-right">Disbursed (?)</th>
+                    <th className="py-3 px-4 text-right">Agreed Repayment (?)</th>
+                    <th className="py-3 px-4 text-right">Gross Difference (?)</th>
+                    <th className="py-3 px-4 text-right">Total Paid (?)</th>
                     <th className="py-3 px-4">Completed Date</th>
                   </tr>
                 </thead>
@@ -450,15 +450,15 @@ const Reports = () => {
                     <tr key={c.accountId} className="hover:bg-emerald-50/30">
                       <td className="py-3 px-4 font-mono font-bold text-slate-900">{c.accountNumber}</td>
                       <td className="py-3 px-4 font-bold text-slate-900">{c.customerName}</td>
-                      <td className="py-3 px-4 text-right font-mono">₹{c.totalDisbursed?.toLocaleString('en-IN')}</td>
+                      <td className="py-3 px-4 text-right font-mono">?{c.totalDisbursed?.toLocaleString('en-IN')}</td>
                       <td className="py-3 px-4 text-right font-mono font-bold text-slate-900">
-                        ₹{c.agreedRepayment?.toLocaleString('en-IN')}
+                        ?{c.agreedRepayment?.toLocaleString('en-IN')}
                       </td>
                       <td className="py-3 px-4 text-right font-mono font-semibold text-purple-700">
-                        ₹{c.grossDifference?.toLocaleString('en-IN')}
+                        ?{c.grossDifference?.toLocaleString('en-IN')}
                       </td>
                       <td className="py-3 px-4 text-right font-mono font-black text-emerald-700">
-                        ₹{c.totalPaid?.toLocaleString('en-IN')}
+                        ?{c.totalPaid?.toLocaleString('en-IN')}
                       </td>
                       <td className="py-3 px-4 font-mono text-slate-600">
                         {new Date(c.completedDate).toLocaleDateString('en-IN')}

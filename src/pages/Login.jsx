@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { ArrowRight, LockKeyhole, Mail, ShieldAlert, ShieldCheck, TrendingUp } from 'lucide-react';
 import api from '../services/api';
 import './Login.css';
@@ -15,6 +16,7 @@ const Login = () => {
   const [forgotMessage, setForgotMessage] = useState('');
 
   const { login } = useAuth();
+  const { language, setLanguage } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/';
@@ -77,18 +79,18 @@ const Login = () => {
           </a>
 
           <div className="login-intro-copy">
-            <p className="login-kicker"><span /> Finance operations suite</p>
-            <h1>Collections,<br /><em>in clear view.</em></h1>
+            <p className="login-kicker"><span /> Intelligent finance platform</p>
+            <h1>Every rupee,<br /><em>accounted for.</em></h1>
             <p className="login-intro-text">
-              A calmer way to manage customers, track repayments, and keep every collection moving.
+              Streamline collections, automate repayment tracking, and unlock real-time financial clarity — all from one powerful command centre.
             </p>
           </div>
 
           <div className="login-visual" aria-hidden="true">
             <div className="login-visual-top">
               <div>
-                <span className="visual-label">COLLECTION OVERVIEW</span>
-                <strong>Finance workspace</strong>
+                <span className="visual-label">LIVE DASHBOARD</span>
+                <strong>Command Centre</strong>
               </div>
               <span className="visual-icon"><TrendingUp size={18} /></span>
             </div>
@@ -97,12 +99,13 @@ const Login = () => {
               <svg viewBox="0 0 520 150" preserveAspectRatio="none">
                 <defs>
                   <linearGradient id="chartStroke" x1="0" x2="1" y1="0" y2="0">
-                    <stop offset="0%" stopColor="#bfe23a" stopOpacity=".35" />
-                    <stop offset="100%" stopColor="#d8f77c" />
+                    <stop offset="0%" stopColor="#A58BEA" stopOpacity=".65" />
+                    <stop offset="55%" stopColor="#13A89E" />
+                    <stop offset="100%" stopColor="#E7A94B" />
                   </linearGradient>
                   <linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stopColor="#bfe23a" stopOpacity=".2" />
-                    <stop offset="100%" stopColor="#bfe23a" stopOpacity="0" />
+                    <stop offset="0%" stopColor="#13A89E" stopOpacity=".28" />
+                    <stop offset="100%" stopColor="#13A89E" stopOpacity="0" />
                   </linearGradient>
                 </defs>
                 <path className="visual-chart-area" d="M0 120 C35 112 47 92 78 98 S126 120 160 84 S210 89 245 67 S295 89 330 53 S380 67 410 42 S462 50 520 14 V150 H0Z" />
@@ -112,8 +115,8 @@ const Login = () => {
               </svg>
             </div>
             <div className="login-visual-bottom">
-              <span><i className="status-dot" /> Secure collection management</span>
-              <span>Built for clarity <b>↗</b></span>
+              <span><i className="status-dot" /> Real-time collection intelligence</span>
+              <span>Built for precision <b>↗</b></span>
             </div>
           </div>
 
@@ -124,6 +127,17 @@ const Login = () => {
         </section>
 
         <section className="login-form-side" aria-label="Sign in">
+          <label className="login-lang-bar">
+            <span>மொழி / Language</span>
+            <select
+              value={language}
+              onChange={(event) => setLanguage(event.target.value)}
+              aria-label="Language"
+            >
+              <option value="en">English</option>
+              <option value="ta">தமிழ்</option>
+            </select>
+          </label>
           <div className="login-card">
             <div className="login-card-head">
               <span className="login-card-icon"><LockKeyhole size={18} /></span>
@@ -201,7 +215,7 @@ const Login = () => {
             </div>
           </div>
 
-          <p className="login-footer">Protected with encrypted sessions <span /> Tridin Finance Management</p>
+          <p className="login-footer">Bank-grade encryption <span /> Tridin Finance Management</p>
         </section>
       </main>
 
