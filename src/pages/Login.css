@@ -105,6 +105,20 @@
   font-weight: 900;
 }
 
+.login-brand-mark img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: contain;
+  padding: 2px;
+  background: #fff;
+}
+
+.login-brand-copy { display: grid; gap: 2px; }
+.login-brand-copy small { color: var(--login-secondary); font-size: 11px; font-weight: 800; letter-spacing: .04em; }
+.login-brand-name { color: var(--login-primary); }
+.login-brand-name span { color: #13A85B; }
+
 .login-brand-name {
   color: var(--login-navy);
   font-size: 18px;
@@ -377,7 +391,7 @@ html[lang="ta"] .visual-label {
 }
 
 .login-card {
-  width: min(100%, 450px);
+  width: min(100%, 560px);
   padding: clamp(24px, 4vw, 40px);
   border: 1px solid #E2E8F4;
   border-radius: 26px;
@@ -386,6 +400,9 @@ html[lang="ta"] .visual-label {
     0 24px 60px -16px rgba(23, 35, 60, 0.12),
     0 4px 14px -2px rgba(36, 70, 168, 0.06);
 }
+
+.login-card-brand { display: flex; align-items: center; gap: 10px; color: var(--login-primary); font-size: 14px; }
+.login-card-brand img { width: 42px; height: 42px; object-fit: contain; padding: 2px; border-radius: 50%; border: 2px solid #E2E8F4; background: #fff; }
 
 .login-card-head {
   display: flex;
@@ -509,6 +526,39 @@ html[lang="ta"] .visual-label {
   box-shadow: 0 0 0 3px rgba(36, 70, 168, 0.12);
 }
 
+.login-password-toggle {
+  position: absolute;
+  right: 8px;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 0;
+  border-radius: 10px;
+  color: var(--login-muted);
+  background: transparent;
+  cursor: pointer;
+}
+
+.login-password-toggle:hover { color: var(--login-primary); background: #EEF2FC; }
+.login-input-wrap input.login-password-input { padding-right: 48px; }
+
+.login-remember {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 28px;
+  color: var(--login-muted);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.login-remember input { width: 16px; height: 16px; accent-color: var(--login-primary); }
+.login-modal > .login-card-icon { margin-bottom: 14px; }
+.login-modal h2 { margin: 0; color: var(--login-navy); font-size: 22px; }
+.login-modal > p { margin: 8px 0 20px; color: var(--login-muted); font-size: 13px; line-height: 1.6; }
+.login-modal-message { margin: 0; color: #0D857D; font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; }
+
 .login-text-button {
   padding: 4px 0;
   border: 0;
@@ -631,6 +681,9 @@ html[lang="ta"] .visual-label {
   font-size: 11px;
   font-weight: 600;
   cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transition: background 0.18s, border-color 0.18s, color 0.18s;
 }
 
@@ -644,7 +697,7 @@ html[lang="ta"] .visual-label {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  shrink: 0;
+  flex: 0 0 auto;
 }
 
 .demo-admin {

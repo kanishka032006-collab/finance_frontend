@@ -6,6 +6,17 @@ export default {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'gradient-neon': 'linear-gradient(to right, #13A89E, #2446A8)',
+        'gradient-neon-vertical': 'linear-gradient(to bottom, #13A89E, #2446A8)',
+      },
+      gradientColorStops: {
+        'neon-start': '#13A89E',
+        'neon-end': '#2446A8',
+        'neon-accent': '#A58BEA',
+        'neon-highlight': '#E7A94B',
+      },
+
       screens: {
         xs: '360px',
       },
