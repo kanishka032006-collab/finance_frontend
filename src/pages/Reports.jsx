@@ -108,7 +108,7 @@ const Reports = () => {
             <Download className="w-4 h-4 text-slate-950" />
             Export CSV / Excel
           </button>
-          <PrintPDFButton targetId="printable-area" title={`TRIDIN FINANCE – ${reportTabs.find(t => t.id === activeTab)?.name || 'Report'}`} />
+          <PrintPDFButton targetId="printable-area" title={`TamilFins – ${reportTabs.find(t => t.id === activeTab)?.name || 'Report'}`} />
         </div>
       </div>
 

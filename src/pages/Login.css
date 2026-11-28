@@ -107,9 +107,13 @@
 
 .login-brand-name {
   color: var(--login-navy);
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: 0.1em;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  line-height: 1.2;
 }
 
 .login-brand-name b {
@@ -135,6 +139,13 @@
   font-weight: 800;
   letter-spacing: 0.18em;
   text-transform: uppercase;
+}
+
+html[lang="ta"] .login-kicker,
+html[lang="ta"] .login-card-overline,
+html[lang="ta"] .visual-label {
+  text-transform: none;
+  letter-spacing: 0.02em;
 }
 
 .login-kicker {

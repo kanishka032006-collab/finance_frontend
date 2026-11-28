@@ -28,7 +28,7 @@ const Settings = () => {
   };
 
   const [settings, setSettings] = useState({
-    companyName: 'Tridin Software',
+    companyName: 'TamilFins',
     currencySymbol: '₹',
     receiptPrefix: 'REC-YYYYMM-XXXX',
     defaultDueDay: 'Monday',

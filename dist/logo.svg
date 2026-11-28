@@ -1,5 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
-  <rect width="100" height="100" rx="24" fill="#0F172A"/>
-  <rect x="22" y="24" width="56" height="12" rx="4" fill="#BFE23A"/>
-  <rect x="44" y="36" width="12" height="42" rx="4" fill="#BFE23A"/>
+  <defs>
+    <linearGradient id="tridinBg" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#17233C"/>
+      <stop offset="100%" stop-color="#2446A8"/>
+    </linearGradient>
+    <linearGradient id="tridinAccent" x1="22" y1="24" x2="78" y2="78" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#13A89E"/>
+      <stop offset="100%" stop-color="#A58BEA"/>
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="24" fill="url(#tridinBg)"/>
+  <rect x="22" y="25" width="56" height="12" rx="6" fill="url(#tridinAccent)"/>
+  <rect x="44" y="39" width="12" height="38" rx="6" fill="#FFFFFF"/>
+  <circle cx="72" cy="70" r="6" fill="#E7A94B"/>
 </svg>

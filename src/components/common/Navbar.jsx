@@ -28,13 +28,17 @@ const Navbar = ({ onToggleSidebar }) => {
         </button>
 
         {/* Compact mobile brand */}
-        <div className="flex items-center gap-2 lg:hidden min-w-0">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#2446A8] to-[#13A89E] text-white font-black flex items-center justify-center text-sm shadow-sm shrink-0">
-            T
+        <div className="flex items-center gap-2.5 lg:hidden min-w-0">
+          <div className="w-9 h-9 rounded-full bg-white border border-[#2446A8]/30 shadow-xs flex items-center justify-center p-0.5 overflow-hidden shrink-0 ring-2 ring-[#2446A8]/10 aspect-square">
+            <img
+              src="/tamilfins-logo.jpg"
+              alt="TamilFins"
+              className="w-full h-full object-contain rounded-full"
+            />
           </div>
           <div className="min-w-0 sm:hidden">
             <span className="text-xs font-black tracking-wide text-[#17233C] block truncate">
-              TRIDIN FINANCE
+              {language === 'ta' ? 'தமிழ்ஃபின்ஸ்' : 'TamilFins'}
             </span>
           </div>
         </div>
@@ -43,9 +47,11 @@ const Navbar = ({ onToggleSidebar }) => {
         <div className="hidden sm:block min-w-0">
           <span className="text-[11px] text-[#13A89E] font-semibold block">{todayFormatted}</span>
           <div className="flex items-center gap-2 min-w-0">
-            <h2 className="text-sm font-bold text-[#17233C] truncate">Finance Collection Management</h2>
+            <h2 className="text-sm font-bold text-[#17233C] truncate">
+              {language === 'ta' ? 'தமிழ்ஃபின்ஸ் நிதி வசூல் மேலாண்மை' : 'TamilFins Collection Management'}
+            </h2>
             <span className="hidden xl:inline-flex items-center gap-1 text-[10px] text-[#0D857D] bg-[#E6F8F7] px-2.5 py-0.5 rounded-full font-semibold border border-[#13A89E]/25 shrink-0">
-              <ShieldCheck className="w-3 h-3 text-[#13A89E]" /> Live Secure Portal
+              <ShieldCheck className="w-3 h-3 text-[#13A89E]" /> {language === 'ta' ? 'பாதுகாப்பான நேரடி தளம்' : 'Live Secure Portal'}
             </span>
           </div>
         </div>

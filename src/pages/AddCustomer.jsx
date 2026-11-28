@@ -118,7 +118,7 @@ const AddCustomer = () => {
             <p className="text-xs text-[#718096]">
               {editId
                 ? 'Modify registered customer KYC and contact details'
-                : 'Enroll client into Tridin Finance collection system'}
+                : 'Enroll client into TamilFins Finance collection system'}
             </p>
           </div>
         </div>

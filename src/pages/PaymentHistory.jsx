@@ -125,7 +125,7 @@ const PaymentHistory = () => {
           <p className="text-xs text-slate-500 mt-0.5">Auditable repository of field collections, vouchers & reversal journals</p>
         </div>
         <div className="flex items-center gap-2 self-start sm:self-auto no-print">
-          <PrintPDFButton targetId="printable-area" title="TRIDIN FINANCE – Payment History" />
+          <PrintPDFButton targetId="printable-area" title="TamilFins – Payment History" />
         </div>
       </div>
 

@@ -23,9 +23,11 @@ import {
   X,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const { user, logout } = useAuth();
+  const { language } = useLanguage();
 
   useEffect(() => {
     const handleKey = (e) => {
@@ -197,18 +199,22 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         {/* Brand Header */}
         <div className="h-16 flex items-center justify-between gap-2 px-4 sm:px-5 border-b border-white/10 bg-[#17233C]/80 backdrop-blur-md shrink-0">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#2446A8] to-[#13A89E] text-white font-black flex items-center justify-center text-lg shadow-md shadow-[#2446A8]/40 ring-1 ring-white/20 shrink-0">
-              T
+            <div className="w-10 h-10 rounded-full bg-white border-2 border-[#13A89E]/40 shadow-md flex items-center justify-center p-1 overflow-hidden shrink-0 ring-2 ring-white/20 aspect-square">
+              <img
+                src="/tamilfins-logo.jpg"
+                alt="TamilFins Logo"
+                className="w-full h-full object-contain rounded-full"
+              />
             </div>
             <div className="min-w-0">
               <h1 className="text-sm font-black tracking-wider text-white flex items-center gap-1.5">
-                TRIDIN
-                <span className="text-[#E7A94B] font-extrabold text-[10px] px-1.5 py-0.5 rounded-md bg-[#2446A8]/50 border border-[#E7A94B]/30">
+                <span>{language === 'ta' ? 'தமிழ்ஃபின்ஸ்' : 'TamilFins'}</span>
+                <span className="text-[#13A89E] font-extrabold text-[9px] px-1.5 py-0.5 rounded-md bg-[#2446A8]/50 border border-[#13A89E]/30">
                   FINANCE
                 </span>
               </h1>
               <p className="text-[10px] text-[#A58BEA] font-medium tracking-wide truncate">
-                Collection Management
+                {language === 'ta' ? 'திட்டமிடு • வளர் • முன்னேறு' : 'Plan • Grow • Prosper'}
               </p>
             </div>
           </div>

@@ -8,7 +8,7 @@ const ReceiptModal = ({ isOpen, onClose, receipt }) => {
 
   const openReceiptPrintDialog = () => {
     const previousTitle = document.title;
-    document.title = `TRIDIN_Receipt_${receipt.receiptNumber}`;
+    document.title = `TamilFins_Receipt_${receipt.receiptNumber}`;
     window.print();
     window.setTimeout(() => {
       document.title = previousTitle;
@@ -34,13 +34,17 @@ const ReceiptModal = ({ isOpen, onClose, receipt }) => {
           <div className="flex flex-col xs:flex-row justify-between items-start gap-3 border-b border-[#E2E8F4] pb-4 pt-1">
             <div>
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#2446A8] to-[#13A89E] text-white font-black flex items-center justify-center text-sm shadow">
-                  T
+                <div className="w-11 h-11 rounded-full bg-white border border-[#2446A8]/30 shadow-xs flex items-center justify-center p-0.5 overflow-hidden shrink-0 ring-2 ring-[#2446A8]/10 aspect-square">
+                  <img
+                    src="/tamilfins-logo.jpg"
+                    alt="TamilFins"
+                    className="w-full h-full object-contain rounded-full"
+                  />
                 </div>
                 <div>
-                  <h2 className="text-base sm:text-lg font-black text-[#17233C] tracking-tight">TRIDIN SOFTWARE</h2>
-                  <p className="text-[10px] text-[#718096] font-semibold tracking-wider uppercase">
-                    Finance Collection Division
+                  <h2 className="text-base sm:text-lg font-black text-[#17233C] tracking-tight">TamilFins</h2>
+                  <p className="text-[10px] text-[#13A89E] font-semibold tracking-wider uppercase">
+                    Finance Collection Management
                   </p>
                 </div>
               </div>

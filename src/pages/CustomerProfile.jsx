@@ -118,14 +118,14 @@ const CustomerProfile = () => {
             </button>
             <PrintPDFButton
               targetId="printable-area"
-              title={`TRIDIN FINANCE – Customer Profile: ${customer.name}`}
+              title={`TamilFins – Customer Profile: ${customer.name}`}
               compact
             />
           </div>
         ) : (
           <PrintPDFButton
             targetId="printable-area"
-            title={`TRIDIN FINANCE – Customer Profile: ${customer.name}`}
+            title={`TamilFins – Customer Profile: ${customer.name}`}
             compact
           />
         )}

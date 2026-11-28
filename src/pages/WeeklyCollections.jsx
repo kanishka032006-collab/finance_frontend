@@ -305,7 +305,7 @@ const WeeklyCollections = () => {
                   <div className="p-4 rounded-xl bg-[#F5F7FC] border border-[#E2E8F4] flex flex-col sm:flex-row items-center gap-4">
                     <div className="bg-white p-2.5 rounded-xl border border-[#E2E8F4] shadow-xs shrink-0">
                       <QRCodeSVG
-                        value={`upi://pay?pa=tridin@upi&pn=Tridin%20Finance&am=${paymentAmountNum}&cu=INR&tn=${selectedAccountDetails?.accountNumber || 'COLLECTION'}`}
+                        value={`upi://pay?pa=tamilfins@upi&pn=TamilFins%20Finance&am=${paymentAmountNum}&cu=INR&tn=${selectedAccountDetails?.accountNumber || 'COLLECTION'}`}
                         size={104}
                       />
                     </div>

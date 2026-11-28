@@ -3,7 +3,7 @@ import { Printer, Download, Loader2 } from 'lucide-react';
 
 const PrintPDFButton = ({
   targetId = 'printable-area',
-  title = 'TRIDIN FINANCE REPORT',
+  title = 'TamilFins Finance Report',
   compact = false,
   className = '',
 }) => {

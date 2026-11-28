@@ -18,7 +18,7 @@ const MainLayout = () => {
             T
           </div>
           <p className="text-xs font-bold text-[#17233C] tracking-wider uppercase">
-            Loading Tridin Finance System...
+            Loading TamilFins System...
           </p>
         </div>
       </div>

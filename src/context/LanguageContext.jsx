@@ -48,6 +48,19 @@ const ta = {  "Dedicated Role Portals": "பயனர் பிரிவுக�
   "Finance workspace": "நிதி பணித்தளம்",
   "Secure collection management": "பாதுகாப்பான வசூல் மேலாண்மை",
   "Built for clarity": "தெளிவான செயல்பாட்டிற்காக",
+  "TamilFins": "தமிழ்ஃபின்ஸ்",
+  "TamilFins Finance": "தமிழ்ஃபின்ஸ் பைனான்ஸ்",
+  "TamilFins Collection Management": "தமிழ்ஃபின்ஸ் நிதி வசூல் மேலாண்மை",
+  "TamilFins Management System": "தமிழ்ஃபின்ஸ் மேலாண்மை அமைப்பு",
+  "Plan • Grow • Prosper": "திட்டமிடு • வளர் • முன்னேறு",
+  "TamilFins home": "தமிழ்ஃபின்ஸ் முகப்பு",
+  "Loading TamilFins System...": "தமிழ்ஃபின்ஸ் அமைப்பு ஏற்றப்படுகிறது...",
+  "Computer generated authorized receipt. TamilFins Finance Management.": "கணினியால் உருவாக்கப்பட்ட அங்கீகரிக்கப்பட்ட ரசீது. தமிழ்ஃபின்ஸ் நிதி மேலாண்மை.",
+  "Enroll client into TamilFins Finance collection system": "வாடிக்கையாளரை தமிழ்ஃபின்ஸ் நிதி வசூல் அமைப்பில் சேர்க்கவும்",
+  "TRIDIN": "டிரிடின்",
+  "FINANCE": "நிதி",
+  "Invalid email or password.": "தவறான மின்னஞ்சல் அல்லது கடவுச்சொல்.",
+  "Login successful": "வெற்றிகரமாக உள்நுழைந்தது",
   "Role-based access": "பொறுப்பு அடிப்படையிலான அணுகல்",
   "Secure sign-in": "பாதுகாப்பான உள்நுழைவு",
   "SECURE PORTAL": "பாதுகாப்பான தளம்",
@@ -602,6 +615,44 @@ const ta = {  "Dedicated Role Portals": "பயனர் பிரிவுக�
   "Enterprise Loan": "வணிகக் கடன்",
   "Daily": "தினசரி",
   "Enter the UTR / UPI Reference Number below after payment confirmation.": "கட்டணம் உறுதி செய்யப்பட்ட பிறகு கீழே UTR / UPI குறிப்பு எண்ணை உள்ளிடவும்.",
+  "Intelligent finance platform": "நுண்ணறிவு நிதி தளம்",
+  "Every rupee,": "ஒவ்வொரு ரூபாயும்,",
+  "Every rupee": "ஒவ்வொரு ரூபாயும்",
+  "accounted for.": "கணக்கில் உள்ளது.",
+  "accounted for": "கணக்கில் உள்ளது",
+  "Streamline collections, automate repayment tracking, and unlock real-time financial clarity — all from one powerful command centre.": "வசூலை முறைப்படுத்தவும், தவணை கண்காணிப்பை தானியக்கமாக்கவும், நிகழ்நேர நிதித் தெளிவை வெளிக்கொணரவும் — அனைத்தும் ஒரே சக்திவாய்ந்த கட்டுப்பாட்டு மையத்திலிருந்து.",
+  "LIVE DASHBOARD": "நேரடி முகப்பு",
+  "Command Centre": "கட்டுப்பாட்டு மையம்",
+  "Real-time collection intelligence": "நிகழ்நேர வசூல் நுண்ணறிவு",
+  "Built for precision": "துல்லியத்திற்காக உருவாக்கப்பட்டது",
+  "Built for precision ↗": "துல்லியத்திற்காக உருவாக்கப்பட்டது ↗",
+  "Bank-grade encryption": "வங்கி அளவிலான குறியாக்கம்",
+  "Tridin Finance": "டிரிடின் பைனான்ஸ்",
+  "Administrator Executive Console": "நிர்வாகி உயர்நிலைக் கன்சோல்",
+  "• Full Root Controls": "• முழுமையான நிர்வாகக் கட்டுப்பாடுகள்",
+  "Manage Staff": "பணியாளர்களை நிர்வகி",
+  "overall recovery rate": "ஒட்டுமொத்த மீட்பு விகிதம்",
+  "portfolio risk exposure": "கடன் இடர் வெளிப்பாடு",
+  "scheduled instalments": "திட்டமிடப்பட்ட தவணைகள்",
+  "Last 6 Months": "கடந்த 6 மாதங்கள்",
+  "Rolling 7 Weeks": "நடப்பு 7 வாரங்கள்",
+  "Collected Amount": "வசூலிக்கப்பட்ட தொகை",
+  "Dedicated Role Portals:": "பிரத்யேக பயனர் போர்ட்டல்கள்:",
+  "Total Budget": "மொத்த பட்ஜெட்",
+  "Total Income": "மொத்த வருமானம்",
+  "Available Balance": "மீதமுள்ள இருப்பு",
+  "Monthly Financial Reports": "மாதாந்திர நிதி அறிக்கைகள்",
+  "Income vs Expense Charts": "வருமானம் vs செலவு வரைபடங்கள்",
+  "Budget Analytics": "பட்ஜெட் பகுப்பாய்வு",
+  "Scan UPI QR to Pay": "பணம் செலுத்த UPI QR-ஐ ஸ்கேன் செய்யவும்",
+  "Selected Loan": "தேர்ந்தெடுக்கப்பட்ட கடன்",
+  "Scan UPI QR to Pay ": "பணம் செலுத்த UPI QR-ஐ ஸ்கேன் செய்யவும் ",
+  "Total Balance": "மொத்த இருப்பு",
+  "Net Cash Flow": "நிகர பணப்புழக்கம்",
+  "Net Loss": "நிகர நஷ்டம்",
+  "Total Collections": "மொத்த வசூல்கள்",
+  "A calmer way to manage customers, track repayments, and keep every collection moving.": "வாடிக்கையாளர்களை நிர்வகிக்கவும், திருப்பிச் செலுத்துவதைக் கண்காணிக்கவும், ஒவ்வொரு வசூலையும் தடையின்றி நகர்த்தவும் எளிய வழி.",
+  "Protected by Enterprise JWT Authentication & PostgreSQL Row Constraints.": "நிறுவன JWT அங்கீகாரம் மற்றும் PostgreSQL வரிசை கட்டுப்பாடுகளால் பாதுகாக்கப்படுகிறது.",
   "ta": "en",
 };
 
@@ -653,7 +704,7 @@ const hi = {
 export const useLanguage = () => useContext(LanguageContext);
 
 export function LanguageProvider({ children }) {
-  const [language, setLanguage] = useState(() => localStorage.getItem('tridin-language') || 'en');
+  const [language, setLanguage] = useState(() => localStorage.getItem('tridin-language') || 'ta');
   useEffect(() => {
     localStorage.setItem('tridin-language', language);
     document.documentElement.lang = language === 'ta' ? 'ta' : language === 'hi' ? 'hi' : 'en';
@@ -711,7 +762,17 @@ export function LanguageProvider({ children }) {
     };
   }, [language]);
 
-  const value = useMemo(() => ({ language, setLanguage }), [language]);
+  const t = (text) => {
+    if (!text) return text;
+    const normalized = String(text).trim().replace(/\s+/g, ' ');
+    const dict = language === 'ta' ? ta : language === 'hi' ? hi : null;
+    if (dict && dict[normalized]) {
+      return dict[normalized];
+    }
+    return text;
+  };
+
+  const value = useMemo(() => ({ language, setLanguage, t }), [language]);
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
 }
 

@@ -16,7 +16,7 @@ const Login = () => {
   const [forgotMessage, setForgotMessage] = useState('');
 
   const { login } = useAuth();
-  const { language, setLanguage } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/';
@@ -72,25 +72,39 @@ const Login = () => {
       </div>
 
       <main className="login-layout">
-        <section className="login-intro" aria-label="Tridin Finance">
-          <a className="login-brand" href="/login" aria-label="Tridin Finance home">
-            <span className="login-brand-mark">T</span>
-            <span className="login-brand-name">TRIDIN <b>FINANCE</b></span>
+        <section className="login-intro" aria-label="TamilFins">
+          <a className="login-brand" href="/login" aria-label="TamilFins home">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white border-2 border-[#2446A8]/30 shadow-md flex items-center justify-center p-1 overflow-hidden shrink-0 ring-4 ring-[#2446A8]/10 aspect-square">
+              <img
+                src="/tamilfins-logo.jpg"
+                alt="TamilFins"
+                className="w-full h-full object-contain rounded-full"
+              />
+            </div>
+            <div className="flex flex-col text-left min-w-0">
+              <span className="login-brand-name">
+                <span className="text-[#0B47A8]">{language === 'ta' ? 'தமிழ்' : 'Tamil'}</span>
+                <span className="text-[#00A843]">{language === 'ta' ? 'ஃபின்ஸ்' : 'Fins'}</span>
+              </span>
+              <span className="text-[10px] text-[#13A89E] font-bold tracking-wider truncate">
+                {language === 'ta' ? 'திட்டமிடு • வளர் • முன்னேறு' : 'Plan • Grow • Prosper'}
+              </span>
+            </div>
           </a>
 
           <div className="login-intro-copy">
-            <p className="login-kicker"><span /> Intelligent finance platform</p>
-            <h1>Every rupee,<br /><em>accounted for.</em></h1>
+            <p className="login-kicker"><span /> {t('Intelligent finance platform')}</p>
+            <h1>{t('Every rupee,')}<br /><em>{t('accounted for.')}</em></h1>
             <p className="login-intro-text">
-              Streamline collections, automate repayment tracking, and unlock real-time financial clarity — all from one powerful command centre.
+              {t('Streamline collections, automate repayment tracking, and unlock real-time financial clarity — all from one powerful command centre.')}
             </p>
           </div>
 
           <div className="login-visual" aria-hidden="true">
             <div className="login-visual-top">
               <div>
-                <span className="visual-label">LIVE DASHBOARD</span>
-                <strong>Command Centre</strong>
+                <span className="visual-label">{t('LIVE DASHBOARD')}</span>
+                <strong>{t('Command Centre')}</strong>
               </div>
               <span className="visual-icon"><TrendingUp size={18} /></span>
             </div>
@@ -115,14 +129,14 @@ const Login = () => {
               </svg>
             </div>
             <div className="login-visual-bottom">
-              <span><i className="status-dot" /> Real-time collection intelligence</span>
-              <span>Built for precision <b>↗</b></span>
+              <span><i className="status-dot" /> {t('Real-time collection intelligence')}</span>
+              <span>{t('Built for precision')} <b>↗</b></span>
             </div>
           </div>
 
           <div className="login-trust-note">
             <ShieldCheck size={16} />
-            <span>Role-based access <i /> Secure sign-in</span>
+            <span>{t('Role-based access')} <i /> {t('Secure sign-in')}</span>
           </div>
         </section>
 
@@ -140,13 +154,24 @@ const Login = () => {
           </label>
           <div className="login-card">
             <div className="login-card-head">
-              <span className="login-card-icon"><LockKeyhole size={18} /></span>
-              <span className="login-card-secure">SECURE PORTAL</span>
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-full bg-white border border-[#2446A8]/30 shadow-xs flex items-center justify-center p-0.5 overflow-hidden shrink-0 ring-2 ring-[#2446A8]/10 aspect-square">
+                  <img
+                    src="/tamilfins-logo.jpg"
+                    alt="TamilFins"
+                    className="w-full h-full object-contain rounded-full"
+                  />
+                </div>
+                <span className="text-xs font-extrabold text-[#2446A8]">
+                  {language === 'ta' ? 'தமிழ்ஃபின்ஸ்' : 'TamilFins'}
+                </span>
+              </div>
+              <span className="login-card-secure">{t('SECURE PORTAL')}</span>
             </div>
 
-            <p className="login-card-overline">WELCOME BACK</p>
-            <h2>Sign in to continue</h2>
-            <p className="login-card-subtitle">Enter your account details to access your workspace.</p>
+            <p className="login-card-overline">{t('WELCOME BACK')}</p>
+            <h2>{t('Sign in to continue')}</h2>
+            <p className="login-card-subtitle">{t('Enter your account details to access your workspace.')}</p>
 
             {error && (
               <div className="login-error" role="alert">
@@ -157,7 +182,7 @@ const Login = () => {
 
             <form className="login-form" onSubmit={handleSubmit}>
               <div className="login-field">
-                <label htmlFor="login-email">Email address</label>
+                <label htmlFor="login-email">{t('Email address')}</label>
                 <div className="login-input-wrap">
                   <Mail size={17} />
                   <input
@@ -174,9 +199,9 @@ const Login = () => {
 
               <div className="login-field">
                 <div className="login-label-row">
-                  <label htmlFor="login-password">Password</label>
+                  <label htmlFor="login-password">{t('Password')}</label>
                   <button type="button" className="login-text-button" onClick={() => setForgotModalOpen(true)}>
-                    Forgot password?
+                    {t('Forgot password?')}
                   </button>
                 </div>
                 <div className="login-input-wrap">
@@ -188,34 +213,34 @@ const Login = () => {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter your password"
+                    placeholder={t('Enter your password')}
                   />
                 </div>
               </div>
 
               <button type="submit" className="login-submit" disabled={loading}>
-                <span>{loading ? 'Authenticating…' : 'Sign in to portal'}</span>
+                <span>{loading ? t('Authenticating…') : t('Sign in to portal')}</span>
                 {!loading && <ArrowRight size={18} />}
               </button>
             </form>
 
             <div className="login-demo">
-              <div className="login-demo-heading"><span /> Quick demo access <span /></div>
+              <div className="login-demo-heading"><span /> {t('Quick demo access')} <span /></div>
               <div className="login-demo-buttons">
                 <button type="button" onClick={() => fillCredentials('admin@tridin.com', 'Admin@123')}>
-                  <b className="demo-dot demo-admin" />Admin
+                  <b className="demo-dot demo-admin" />{t('Admin')}
                 </button>
                 <button type="button" onClick={() => fillCredentials('staff@tridin.com', 'Staff@123')}>
-                  <b className="demo-dot demo-staff" />Collector
+                  <b className="demo-dot demo-staff" />{t('Collector')}
                 </button>
                 <button type="button" onClick={() => fillCredentials('auditor@tridin.com', 'Auditor@123')}>
-                  <b className="demo-dot demo-auditor" />Auditor
+                  <b className="demo-dot demo-auditor" />{t('Auditor')}
                 </button>
               </div>
             </div>
           </div>
 
-          <p className="login-footer">Bank-grade encryption <span /> Tridin Finance Management</p>
+          <p className="login-footer">{t('Bank-grade encryption')} <span /> {t('TamilFins Management System')}</p>
         </section>
       </main>
 
@@ -228,8 +253,8 @@ const Login = () => {
         }}>
           <section className="login-modal" role="dialog" aria-modal="true" aria-labelledby="reset-title">
             <div className="login-modal-icon"><Mail size={18} /></div>
-            <h3 id="reset-title">Reset password</h3>
-            <p>Enter your registered email to send a password reset request to your administrator.</p>
+            <h3 id="reset-title">{t('Reset password')}</h3>
+            <p>{t('Enter your registered email to send a password reset request to your administrator.')}</p>
             {forgotMessage ? (
               <div className="login-success" role="status">{forgotMessage}</div>
             ) : (
@@ -241,10 +266,10 @@ const Login = () => {
                     required
                     value={forgotEmail}
                     onChange={(e) => setForgotEmail(e.target.value)}
-                    placeholder="Enter email address"
+                    placeholder={t('Enter email address')}
                   />
                 </div>
-                <button type="submit" className="login-submit">Send request <ArrowRight size={17} /></button>
+                <button type="submit" className="login-submit">{t('Send request')} <ArrowRight size={17} /></button>
               </form>
             )}
             <button
@@ -255,7 +280,7 @@ const Login = () => {
                 setForgotMessage('');
               }}
             >
-              Close
+              {t('Close')}
             </button>
           </section>
         </div>
